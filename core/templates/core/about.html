@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}Hakkımızda | Verda{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts - Plus Jakarta Sans & Playfair Display for Elite Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+<style>
+    .premium-font {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .accent-font {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Premium border-free glass panel design */
+    .nature-glass-panel {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(28px) saturate(180%);
+        -webkit-backdrop-filter: blur(28px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 36px;
+        box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.02);
+    }
+    
+    /* Elegant borderless organic cards */
+    .nature-glass-card {
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        border-radius: 28px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transform-style: preserve-3d;
+    }
+    .nature-glass-card:hover {
+        background: rgba(255, 255, 255, 0.75);
+        border-color: rgba(255, 255, 255, 0.95);
+        transform: translateY(-5px) scale(1.01);
+        box-shadow: 0 15px 35px -8px rgba(16, 185, 129, 0.12), 0 0 15px rgba(16, 185, 129, 0.03);
+    }
+    
+    /* Background foliage backlights */
+    .glow-layer-emerald {
+        background: radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.1), transparent 60%);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Doğa Ambient Arka Plan Görselleri -->
+<div class="absolute -top-[120px] left-0 w-full h-[520px] bg-gradient-to-b from-emerald-50/20 to-transparent -z-10"></div>
+
+<div class="max-w-5xl mx-auto px-4 py-16 premium-font">
+
+    <!-- Header Section -->
+    <div class="text-center mb-16 relative">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 text-[10px] font-black tracking-widest uppercase mb-4 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-emerald-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            VİZYONUMUZ & MİSYONUMUZ
+        </span>
+        <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight">Geleceğin Sürdürülebilir<br><span class="accent-font italic bg-gradient-to-r from-emerald-600 via-emerald-500 to-green-600 bg-clip-text text-transparent">Akıllı Ziraat Platformu</span></h1>
+        <p class="mt-4 text-gray-500 font-semibold text-sm max-w-xl mx-auto leading-relaxed">Verda, doğadan ilham alan tarımsal yapay zeka ile tarlanıza dijital ve bilimsel bir vizyon kazandırır.</p>
+    </div>
+
+    <!-- Main Glass Board -->
+    <div class="nature-glass-panel p-8 md:p-12 mb-12 relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-48 h-48 bg-emerald-400 opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="space-y-10 leading-relaxed text-gray-700 text-sm font-medium relative z-10">
+            <p class="text-base text-gray-900 font-bold leading-normal">
+                Verda, modern tarımın dijitalleşmesini, üretkenliğini ve çevresel sürdürülebilirliğini artırmak için geliştirilmiş yapay zeka tabanlı bir **Açıklanabilir Tarımsal Analiz** ekosistemidir.
+            </p>
+            
+            <p>
+                Geleneksel tarımsal teşhis sistemleri bir hastalığı belirlediğinde arkasındaki bilimsel veya morfolojik gerekçeleri sunamazken, Verda entegre ettiği **Grad-CAM (Gradient-weighted Class Activation Mapping)** ve **Sanal Isı Haritası** algoritmalarıyla tarımsal yaprağın tam olarak hangi piksel ve dokularına odaklandığını çiftçiye görsel olarak kanıtlar. Bu sayede yapay zeka sadece bir karar alıcı değil, aynı zamanda kararlarını açıklayabilen güvenilir bir ziraat ortağı haline gelir.
+            </p>
+
+            <!-- 3 Column Borderless Glass Matrix Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                
+                <!-- Card 1 -->
+                <div class="nature-glass-card p-6 flex flex-col items-start tilt-3d">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4 border border-emerald-100 shadow-inner flex-shrink-0">
+                        <!-- Book/Leaf SVG -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <h3 class="font-black text-gray-900 text-sm tracking-tight mb-2">Akıllı Tarla Defteri</h3>
+                    <p class="text-xs text-gray-500 leading-normal">Tarlanızın geçmiş teşhislerini, ekim bilgilerini ve toprak sağlığını kronolojik olarak kayıt altında tutar.</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="nature-glass-card p-6 flex flex-col items-start tilt-3d">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4 border border-blue-100 shadow-inner flex-shrink-0">
+                        <!-- Brain Network SVG -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </div>
+                    <h3 class="font-black text-gray-900 text-sm tracking-tight mb-2">Yapay Zeka Karar Analizi</h3>
+                    <p class="text-xs text-gray-500 leading-normal">Teşhis edilen durumun yapraktaki odak noktalarını renk haritalarıyla göstererek şeffaf analiz sunar.</p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="nature-glass-card p-6 flex flex-col items-start tilt-3d">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-4 border border-amber-100 shadow-inner flex-shrink-0">
+                        <!-- Organic Leaf Sprout SVG -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    </div>
+                    <h3 class="font-black text-gray-900 text-sm tracking-tight mb-2">Sürdürülebilirlik</h3>
+                    <p class="text-xs text-gray-500 leading-normal">Gereksiz kimyasal veya ilaç kullanımını önlemek amacıyla öncelikle organik çözümleri önerir.</p>
+                </div>
+                
+            </div>
+
+            <p class="pt-6">
+                Platformumuz, ziraat mühendisleri, veri bilimcileri ve bilinçli çiftçilerin ortak tecrübeleriyle kurulmuştur. Hedefimiz 2026 yılı ve sonrasında küresel iklim krizinin ve ekolojik zorlukların getirdiği tarımsal riskleri en aza indirerek verimli, çevre dostu ve bilimsel ziraatı herkes için erişilebilir kılmaktır.
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Active 3D Parallax Tilt effect on cards
+        function init3dTilt() {
+            const elements = document.querySelectorAll('.tilt-3d');
+            elements.forEach(el => {
+                el.style.transformStyle = 'preserve-3d';
+                el.style.transition = 'transform 0.15s ease-out, box-shadow 0.25s ease';
+                
+                el.addEventListener('mousemove', e => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const rotateX = -((y / rect.height) - 0.5) * 8; // max 8 degrees
+                    const rotateY = ((x / rect.width) - 0.5) * 8;
+                    
+                    el.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.025)`;
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    el.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
+                    el.style.transition = 'transform 0.3s ease-in-out, box-shadow 0.3s ease';
+                });
+            });
+        }
+
+        init3dTilt();
+    });
+</script>
+{% endblock %}

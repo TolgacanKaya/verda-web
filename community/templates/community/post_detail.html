@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block title %}Gönderi Detayı | Verda{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12">
+    <a href="{% url 'feed' %}" class="inline-flex items-center text-gray-500 hover:text-brand-600 font-bold mb-6 transition">
+        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        Meydana Dön
+    </a>
+
+    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-8">
+        <div class="p-6 border-b border-gray-50 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                {% if post.author.profile_picture %}
+                    <img src="{{ post.author.profile_picture.url }}" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white">
+                {% else %}
+                    <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold text-xl">
+                        {{ post.author.user.username|make_list|first|upper }}
+                    </div>
+                {% endif %}
+                <div>
+                    <h3 class="font-bold text-gray-900 text-lg">{{ post.author.user.username }}</h3>
+                    <p class="text-sm text-gray-400">{{ post.created_at|date:"d F Y - H:i" }}</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                {% if post.related_plant %}
+                    <span class="bg-brand-50 text-brand-700 px-4 py-2 rounded-xl text-sm font-bold border border-brand-100 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        {{ post.related_plant.name }}
+                    </span>
+                {% endif %}
+                {% if request.user.is_authenticated and post.author.user == request.user or request.user.is_superuser %}
+                <form method="POST" action="{% url 'delete_post' post.id %}" onsubmit="return confirm('Bu gönderiyi silmek istediğinizden emin misiniz?');" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="text-red-500 hover:text-red-700 transition p-1" title="Gönderiyi Sil">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="p-6">
+            <p class="text-gray-800 text-lg leading-relaxed mb-6">{{ post.content }}</p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="w-full rounded-2xl shadow-sm border border-gray-100">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <h3 class="text-2xl font-extrabold text-gray-900 flex items-center">
+            <svg class="w-6 h-6 mr-2 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+            Yorumlar ({{ comments.count }})
+        </h3>
+
+        {% if user.is_authenticated %}
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-8">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="flex justify-end mt-4">
+                    <button type="submit" class="bg-brand-600 text-white font-bold py-2 px-8 rounded-xl hover:bg-brand-700 transition shadow-md">
+                        Cevap Yaz
+                    </button>
+                </div>
+            </form>
+        </div>
+        {% else %}
+        <div class="bg-gradient-to-r from-brand-50 to-white p-8 rounded-3xl border border-brand-100 shadow-sm mb-8 text-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-200 rounded-full opacity-50 blur-3xl"></div>
+            <h2 class="text-2xl font-extrabold text-gray-900 mb-3 relative z-10">Fikrinizi Belirtmek İster Misiniz?</h2>
+            <p class="text-gray-600 mb-6 relative z-10">Bu çiftçimize tavsiye vermek veya kendi tecrübelerinizi paylaşmak için hemen aramıza katılın.</p>
+            <div class="flex justify-center space-x-4 relative z-10">
+                <a href="{% url 'register' %}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-md">Ücretsiz Kayıt Ol</a>
+                <a href="{% url 'login' %}?next={{ request.path }}" class="bg-white hover:bg-gray-50 text-gray-700 font-bold py-3 px-8 rounded-xl border border-gray-200 transition">Giriş Yap</a>
+            </div>
+        </div>
+        {% endif %}
+        {% for comment in comments %}
+        <div class="{% if comment.is_expert_advice %}bg-brand-50 border-brand-200{% else %}bg-white border-gray-100{% endif %} p-6 rounded-2xl border-2 shadow-sm transition mb-6">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3">
+                    {% if comment.author.profile_picture %}
+                        <img src="{{ comment.author.profile_picture.url }}" class="w-8 h-8 rounded-full object-cover shadow-sm border border-gray-100">
+                    {% else %}
+                        <div class="w-8 h-8 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-bold text-sm">
+                            {{ comment.author.user.username|make_list|first|upper }}
+                        </div>
+                    {% endif %}
+                    <span class="font-bold text-gray-900">{{ comment.author.user.username }}</span>
+                    {% if comment.is_expert_advice %}
+                        <span class="bg-brand-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-tighter">Uzman Tavsiyesi</span>
+                    {% endif %}
+                </div>
+                <span class="text-xs text-gray-400">{{ comment.created_at|timesince }} önce</span>
+            </div>
+            <p class="text-gray-700 leading-relaxed mb-3">{{ comment.content }}</p>
+            
+            {% if user.is_authenticated %}
+            <div class="flex justify-start">
+                <button onclick="toggleReplyForm({{ comment.id }})" class="text-brand-600 hover:text-brand-700 font-bold text-xs flex items-center transition">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
+                    Yanıtla
+                </button>
+            </div>
+            
+            <!-- Inline Yanıt Formu (Başlangıçta Gizli) -->
+            <div id="reply-form-{{ comment.id }}" class="hidden mt-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <textarea name="content" rows="2" class="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-brand-500 focus:border-brand-500 px-3 py-2 bg-white text-sm" placeholder="Yanıtınızı yazın..." required></textarea>
+                    <div class="flex justify-end mt-2 space-x-2">
+                        <button type="button" onclick="toggleReplyForm({{ comment.id }})" class="bg-gray-200 text-gray-700 font-bold py-1.5 px-4 rounded-lg text-xs hover:bg-gray-300 transition">İptal</button>
+                        <button type="submit" class="bg-brand-600 text-white font-bold py-1.5 px-4 rounded-lg text-xs hover:bg-brand-700 transition shadow-sm">Yanıt Gönder</button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+            
+            <!-- Yanıtlar Listesi (Replies) -->
+            {% if comment.replies.exists %}
+            <div class="mt-4 pl-6 border-l-2 border-brand-200 space-y-4">
+                {% for reply in comment.replies.all %}
+                <div class="bg-gray-50 border border-gray-100 p-4 rounded-xl shadow-xs transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-2">
+                            {% if reply.author.profile_picture %}
+                                <img src="{{ reply.author.profile_picture.url }}" class="w-6 h-6 rounded-full object-cover shadow-sm border border-gray-100">
+                            {% else %}
+                                <div class="w-6 h-6 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center font-bold text-xs">
+                                    {{ reply.author.user.username|make_list|first|upper }}
+                                </div>
+                            {% endif %}
+                            <span class="font-bold text-gray-800 text-sm">{{ reply.author.user.username }}</span>
+                            {% if reply.is_expert_advice %}
+                                <span class="bg-brand-600 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded uppercase tracking-tighter">Uzman</span>
+                            {% endif %}
+                        </div>
+                        <span class="text-[10px] text-gray-400">{{ reply.created_at|timesince }} önce</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">{{ reply.content }}</p>
+                    {% if user.is_authenticated %}
+                    <div class="flex justify-start mt-2">
+                        <button onclick="replyToReply({{ comment.id }}, '{{ reply.author.user.username }}')" class="text-brand-600 hover:text-brand-700 font-bold text-[10px] flex items-center transition">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
+                            Yanıtla
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p class="text-center text-gray-400 italic py-8">Henüz yorum yapılmamış. İlk görüşü siz bildirin!</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function toggleReplyForm(commentId) {
+        var form = document.getElementById('reply-form-' + commentId);
+        if (form.classList.contains('hidden')) {
+            form.classList.remove('hidden');
+        } else {
+            form.classList.add('hidden');
+        }
+    }
+    function replyToReply(commentId, authorUsername) {
+        var form = document.getElementById('reply-form-' + commentId);
+        form.classList.remove('hidden');
+        var textarea = form.querySelector('textarea');
+        textarea.value = '@' + authorUsername + ' ';
+        textarea.focus();
+    }
+</script>
+{% endblock %}

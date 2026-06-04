@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Gizlilik Politikası | Verda{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts - Plus Jakarta Sans & Playfair Display for Elite Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+<style>
+    .premium-font {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .accent-font {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Premium glass card design */
+    .siber-glass-panel {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(28px) saturate(180%);
+        -webkit-backdrop-filter: blur(28px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 32px;
+        box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.03);
+    }
+    
+    .privacy-card {
+        background: rgba(255, 255, 255, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 22px;
+        padding: 24px;
+        transition: all 0.3s ease;
+    }
+    .privacy-card:hover {
+        background: rgba(255, 255, 255, 0.75);
+        border-color: rgba(255, 255, 255, 0.95);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-16 premium-font">
+
+    <!-- Header Section -->
+    <div class="text-center mb-16 relative">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-[10px] font-black tracking-widest uppercase mb-4">
+            KVKK & VERİ GÜVENLİĞİ
+        </span>
+        <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight">Gizlilik Politikası</h1>
+        <p class="mt-4 text-gray-500 font-semibold text-sm max-w-xl mx-auto leading-relaxed">Çiftlik verileriniz, yaprak fotoğraflarınız ve kişisel hesap bilgilerinizin nasıl korunduğuna dair beyanımız.</p>
+    </div>
+
+    <!-- Main Glass Board -->
+    <div class="siber-glass-panel p-8 md:p-12 mb-12 relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-48 h-48 bg-emerald-400 opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="space-y-8 leading-relaxed text-gray-700 text-sm font-medium">
+            <p class="mb-8 text-xs text-gray-400">Son Güncelleme: 29 Mayıs 2026</p>
+
+            <div class="privacy-card">
+                <h3 class="font-black text-gray-900 text-base mb-2">1. Hangi Verileri Topluyoruz?</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    - **Kişisel Bilgiler:** Hesap kaydı yaparken kullandığınız isim, e-posta adresi ve çiftçi profiliniz.<br>
+                    - **Teşhis Verileri:** Analiz edilmek üzere yüklediğiniz tarımsal yaprak fotoğrafları.<br>
+                    - **Konum ve Çiftlik Verileri:** Tarla kaydı esnasında eklediğiniz coğrafi koordinatlar (bölgesel hastalık yayılım analizi için isteğe bağlı olarak kullanılır).
+                </p>
+            </div>
+
+            <div class="privacy-card">
+                <h3 class="font-black text-gray-900 text-base mb-2">2. Verileri Hangi Amaçla Kullanıyoruz?</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    Toplanan tüm yaprak fotoğrafları yapay zeka derin öğrenme modellerinin doğruluğunu artırmak ve XAI (Grad-CAM) çıktısı üretmek amacıyla saklanır. Kişisel bilgileriniz asla üçüncü parti reklam ağlarına satılmaz veya ticari amaçlarla paylaşılmaz. Toprak ve tarla verileriniz bölgesel tarım haritaları oluşturmak amacıyla isimsizleştirilerek (anonim hale getirilerek) işlenebilir.
+                </p>
+            </div>
+
+            <div class="privacy-card">
+                <h3 class="font-black text-gray-900 text-base mb-2">3. Veri Güvenliği ve KVKK Haklarınız</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    Sistemimizdeki tüm veriler güvenli sunucularda şifrelenmiş olarak saklanır. 6698 sayılı KVKK kapsamında, dilediğiniz an sistemdeki tüm yaprak fotoğraflarınızın, tarla geçmişinizin ve profil verilerinizin kalıcı olarak silinmesini veya güncellenmesini talep etme hakkına sahipsiniz.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

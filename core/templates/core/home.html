@@ -1,0 +1,670 @@
+{% extends 'base.html' %}
+{% block title %}Ana Sayfa | Verda Platformu{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts - Plus Jakarta Sans & Playfair Display for Elite Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+<style>
+    .premium-font {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .accent-font {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Cascade entrance animations on page load */
+    @keyframes siber-fade-up {
+        0% {
+            opacity: 0;
+            transform: translateY(24px);
+            filter: blur(6px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+    }
+    .cascade-item {
+        opacity: 0;
+        animation: siber-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .delay-50 { animation-delay: 50ms; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-150 { animation-delay: 150ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-250 { animation-delay: 250ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-350 { animation-delay: 350ms; }
+
+    /* Elegant borderless organic glass style */
+    .nature-glass-panel {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(28px) saturate(180%);
+        -webkit-backdrop-filter: blur(28px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 36px;
+        box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.02);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .nature-glass-strip {
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        border-radius: 28px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transform-style: preserve-3d;
+    }
+    .nature-glass-strip:hover {
+        background: rgba(255, 255, 255, 0.75);
+        border-color: rgba(255, 255, 255, 0.95);
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 15px 35px -8px rgba(16, 185, 129, 0.12), 0 0 15px rgba(16, 185, 129, 0.03);
+    }
+
+    /* Weather card gradients */
+    .weather-gradient-blue {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.75), rgba(6, 182, 212, 0.75));
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .weather-gradient-orange {
+        background: linear-gradient(135deg, rgba(249, 115, 22, 0.75), rgba(217, 119, 6, 0.75));
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Hero section organic ambient glow */
+    .hero-glow-nature {
+        background: radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.05) 50%, transparent 80%);
+    }
+
+    /* Floating particles background style */
+    @keyframes float-leaves {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-12px) rotate(3deg); }
+    }
+    .floating-leaves-bg {
+        animation: float-leaves 8s infinite ease-in-out;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Doğa Ambient Arka Plan Görselleri -->
+<div class="absolute -top-[120px] left-0 w-full h-[520px] bg-gradient-to-b from-emerald-50/20 to-transparent -z-10"></div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-14 premium-font">
+
+    <!-- Hero Showcase Section (Nature Glassmorphism) -->
+    <div class="nature-glass-panel p-8 md:p-12 mb-12 relative overflow-hidden cascade-item">
+        <div class="absolute inset-0 pointer-events-none z-0 hero-glow-nature animate-pulse" style="animation-duration: 7s;"></div>
+        
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <!-- Left text block (7-span) -->
+            <div class="lg:col-span-7 space-y-6 cascade-item delay-100">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 text-[10px] font-black tracking-widest uppercase shadow-sm">
+                    <svg class="w-3.5 h-3.5 text-emerald-600 animate-spin" style="animation-duration: 8s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.54.94 3.31-.826 2.37-2.37a1.724 1.724 0 001.065-2.572c1.756-.426 1.756-2.924 0-3.35a1.724 1.724 0 00-1.066-2.573c.94-1.543-.826-3.31-2.37-2.37a1.724 1.724 0 00-2.572-1.065c-.426-1.756-2.924-1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
+                    YAPAY ZEKA DESTEKLİ EKOLOJİK TARIM AĞI
+                </span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight leading-none">
+                    Tarlanızın Geleceğini<br>
+                    <span class="accent-font italic bg-gradient-to-r from-emerald-600 via-emerald-500 to-green-600 bg-clip-text text-transparent">Yapay Zeka ile Koruyun</span>
+                </h1>
+                <p class="text-gray-500 text-sm font-semibold max-w-2xl leading-relaxed">
+                    Bitkilerinizdeki hastalıkları tarlanızda anında teşhis edin, organik reçetelere ulaşın ve Köy Meydanı ağında diğer bilinçli üreticilerle yardımlaşın.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="{% url 'diagnose' %}" class="px-7 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-extrabold text-xs tracking-wider uppercase shadow-lg shadow-emerald-600/15 hover:-translate-y-0.5 active:translate-y-0 transition flex items-center justify-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Teşhis Merkezini Başlat
+                    </a>
+                    <a href="{% url 'feed' %}" class="px-7 py-3.5 bg-white/50 hover:bg-white/70 text-gray-700 backdrop-blur-sm rounded-2xl font-extrabold text-xs tracking-wider uppercase border border-white/60 transition flex items-center justify-center">
+                        Köy Meydanı Akışı
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Right graphic block (5-span) -->
+            <div class="lg:col-span-5 flex justify-center lg:justify-end cascade-item delay-200">
+                <div class="w-full max-w-[280px] aspect-square rounded-[36px] bg-gradient-to-tr from-emerald-600/20 to-emerald-500/10 border border-white/40 p-8 flex items-center justify-center shadow-inner floating-leaves-bg">
+                    <svg class="w-36 h-36 text-emerald-600 animate-pulse" style="animation-duration: 4s;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Active Farmer Panel -->
+    {% if user.is_authenticated %}
+    <div class="mb-16 cascade-item delay-200">
+        <div class="flex items-center gap-2 mb-6">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+            <h2 class="text-2xl font-black text-gray-900 tracking-tight">Merhaba {{ user.get_full_name|default:user.username }}, Tarlanızın Durumu</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+            
+            <!-- Diagnostics count -->
+            <div class="nature-glass-strip p-6 flex items-center space-x-5 tilt-3d h-fit self-start">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-inner border border-emerald-100 flex-shrink-0">
+                    <!-- Leaf check SVG -->
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-gray-400 tracking-wider uppercase">Toplam Teşhis</p>
+                    <p class="text-2xl font-black text-gray-950 mt-1 leading-none">{{ total_diagnostics }} Adet</p>
+                </div>
+            </div>
+            
+            <!-- Most common disease -->
+            <div class="nature-glass-strip p-6 flex items-center space-x-5 tilt-3d h-fit self-start">
+                <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shadow-inner border border-amber-100 flex-shrink-0">
+                    <!-- Sprout Warning SVG -->
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-gray-400 tracking-wider uppercase">En Sık Teşhis Edilen Durum</p>
+                    <p class="text-base font-black text-gray-900 mt-1 leading-snug truncate max-w-[200px]">{{ most_common_disease }}</p>
+                </div>
+            </div>
+
+            <!-- Dynamic Weather Widget (Humid-sensitive & Collapsible Google-style details) -->
+            <div id="weather-card" class="weather-gradient-blue p-6 rounded-[28px] shadow-sm flex flex-col justify-between text-white hover:shadow-lg transition-all duration-500 relative overflow-hidden tilt-3d min-h-[110px] self-start h-auto w-full">
+                <div class="absolute -top-10 -right-10 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+                
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md shadow-inner flex-shrink-0" id="weather-icon-container">
+                        <!-- Weather Cloud/Sun SVG -->
+                        <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                    </div>
+                    <div class="flex-grow min-w-0">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[9px] font-black text-white/80 uppercase tracking-widest truncate" id="weather-location">Konum Alınıyor...</p>
+                            <!-- Details Drawer Toggle Button -->
+                            <button id="weather-details-btn" class="text-[8px] font-extrabold bg-white/15 hover:bg-white/25 px-2 py-0.5 rounded-md transition duration-200 border border-white/10 uppercase tracking-wider relative z-20">Detay Gör</button>
+                        </div>
+                        <p class="text-sm font-black leading-snug mt-0.5 truncate" id="weather-status">Lütfen Bekleyin</p>
+                        <p class="text-[8px] font-bold text-white/60 tracking-normal mt-0.5" id="weather-update-time">Güncelleme: --</p>
+                    </div>
+                    <div class="text-right flex-shrink-0 pl-2">
+                        <p class="text-2xl font-black leading-none" id="weather-temp-val">--°</p>
+                    </div>
+                </div>
+
+                <!-- Google Weather style detailed agricultural parameters (Collapsible 2x2 grid) -->
+                <div id="weather-details-drawer" class="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out grid grid-cols-2 gap-2 text-center">
+                    <div class="bg-white/10 rounded-xl py-2 px-2 backdrop-blur-sm flex items-center justify-start space-x-2 text-left mt-3">
+                        <!-- Droplet Icon -->
+                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21.5c-3.5 0-6.5-2.8-6.5-6.5 0-4.5 6.5-12.5 6.5-12.5s6.5 8 6.5 12.5c0 3.7-3 6.5-6.5 6.5z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-[7.5px] font-black text-white/70 uppercase tracking-wider">Nem</p>
+                            <p class="text-[11px] font-black leading-none mt-0.5" id="weather-humidity-val">--%</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 rounded-xl py-2 px-2 backdrop-blur-sm flex items-center justify-start space-x-2 text-left mt-3">
+                        <!-- Rain Icon -->
+                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-[7.5px] font-black text-white/70 uppercase tracking-wider">Yağış</p>
+                            <p class="text-[11px] font-black leading-none mt-0.5" id="weather-precipitation-val">--%</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 rounded-xl py-2 px-2 backdrop-blur-sm flex items-center justify-start space-x-2 text-left">
+                        <!-- Wind Icon -->
+                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 10H4m12-4H4m16 8H4m10 4H4"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-[7.5px] font-black text-white/70 uppercase tracking-wider">Rüzgar</p>
+                            <p class="text-[11px] font-black leading-none mt-0.5 truncate" id="weather-wind-val">-- km/h</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 rounded-xl py-2 px-2 backdrop-blur-sm flex items-center justify-start space-x-2 text-left">
+                        <!-- Clouds Icon -->
+                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-[7.5px] font-black text-white/70 uppercase tracking-wider">Bulut</p>
+                            <p class="text-[11px] font-black leading-none mt-0.5" id="weather-clouds-val">--%</p>
+                        </div>
+                    </div>
+
+                    <!-- Mantar Enfeksiyon Riski Simülatörü -->
+                    <div class="col-span-2 border-t border-white/15 pt-3 mt-3 text-left">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <p class="text-[9px] font-black text-white/80 uppercase tracking-widest flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5 text-white/90" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                Mantar Enfeksiyon Riski
+                            </p>
+                            <span id="fungal-risk-badge" class="text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-emerald-500/30 text-emerald-200 border border-emerald-500/20">Düşük (%0)</span>
+                        </div>
+                        <!-- Progress bar -->
+                        <div class="w-full h-2 bg-white/15 rounded-full overflow-hidden mb-2 relative">
+                            <div id="fungal-risk-bar" class="h-full bg-gradient-to-r from-emerald-400 via-yellow-400 to-red-500 transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        <!-- Advice card -->
+                        <div id="fungal-risk-advice" class="bg-white/10 rounded-xl p-2.5 backdrop-blur-sm border border-white/5 text-[9px] font-semibold text-white/90 leading-relaxed">
+                            Nem ve sıcaklık koşulları dengeli. Mantar enfeksiyonu yayılma riski son derece düşük. Rutin sulamaya devam edin.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% else %}
+    <!-- Public Welcome Banner -->
+    <div class="nature-glass-panel p-8 md:p-12 mb-16 relative overflow-hidden cascade-item delay-200">
+        <div class="absolute -top-12 -right-12 w-48 h-48 bg-emerald-400 opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+            <div class="lg:w-2/3 space-y-4">
+                <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-emerald-700 bg-emerald-100/70 px-3 py-1 rounded-lg">
+                    ÜRETİCİ AĞINA ADIM ATIN
+                </span>
+                <h2 class="text-3xl font-black text-gray-950 tracking-tight leading-tight">Dijital Tarım Topluluğumuza Katılın</h2>
+                <p class="text-gray-500 text-sm font-semibold leading-relaxed">
+                    Tarlanızı dijitalleştirmek, yapay zeka teşhis odak haritalarını geçmişe dönük kaydetmek ve Köy Meydanı akışında mühendislerimizle ücretsiz fikir alışverişi yapmak için hemen yerinizi alın.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                    <div class="flex items-center text-xs font-bold text-gray-700">
+                        <svg class="w-4 h-4 text-emerald-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        Sınırsız Teşhis Geçmişi ve Dijital Tarla
+                    </div>
+                    <div class="flex items-center text-xs font-bold text-gray-700">
+                        <svg class="w-4 h-4 text-emerald-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        Mantar Riski ve Anlık Nem Bildirimleri
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:w-1/3 w-full flex flex-col space-y-3">
+                <a href="{% url 'register' %}" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white text-center rounded-2xl font-extrabold text-xs tracking-wider uppercase shadow-md shadow-emerald-600/10 hover:-translate-y-0.5 active:translate-y-0 transition">
+                    Ücretsiz Kayıt Ol
+                </a>
+                <a href="{% url 'login' %}" class="w-full py-3.5 bg-white/60 hover:bg-white/80 text-gray-700 border border-gray-200/50 text-center rounded-2xl font-extrabold text-xs tracking-wider uppercase shadow-sm transition">
+                    Hesabıma Giriş Yap
+                </a>
+            </div>
+        </div>
+
+        <!-- Global Platform stats board in elegant borders-free rows -->
+        <div class="relative z-10 mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-white/50 pt-8">
+            <div class="text-center md:border-r border-white/50">
+                <p class="text-3xl font-black text-emerald-700 leading-none">{{ total_platform_scans }}</p>
+                <p class="text-[10px] font-black text-gray-400 mt-2 uppercase tracking-wider">Toplam Yapay Zeka Analizi</p>
+            </div>
+            <div class="text-center md:border-r border-white/50">
+                <p class="text-3xl font-black text-emerald-700 leading-none">{{ total_farmers }}</p>
+                <p class="text-[10px] font-black text-gray-400 mt-2 uppercase tracking-wider">Kayıtlı Aktif Çiftçi</p>
+            </div>
+            <div class="text-center">
+                <p class="text-xl font-black text-emerald-700 leading-none truncate max-w-[240px] mx-auto">{{ platform_top_disease }}</p>
+                <p class="text-[10px] font-black text-gray-400 mt-2 uppercase tracking-wider">Kritik Bölgesel Risk</p>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+    <!-- Core features grid with borders-free translucent panels -->
+    <div class="text-center mb-12 cascade-item delay-200">
+        <h2 class="text-3xl font-black text-gray-900 tracking-tight">Akıllı Tarım Portalımız Neler Sunuyor?</h2>
+        <p class="mt-2.5 text-gray-500 font-semibold text-sm max-w-xl mx-auto">Tüm araçlar tarlanızdaki biyolojik sağlığı korumak için entegre çalışır.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6 cascade-item delay-300">
+        
+        <a href="{% url 'encyclopedia' %}" class="nature-glass-strip p-8 flex flex-col items-center justify-between text-center relative group tilt-3d">
+            <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-inner border border-emerald-100 group-hover:scale-110 transition flex-shrink-0">
+                <!-- Book SVG icon -->
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </div>
+            <h3 class="text-lg font-black text-gray-950 tracking-tight mb-2">Bitki Ansiklopedisi</h3>
+            <p class="text-gray-500 text-xs font-semibold leading-relaxed">Hastalıkların görsel belirtilerini, ziraat mühendisi reçetelerini ve organik tedbirleri öğrenin.</p>
+        </a>
+
+        <a href="{% url 'diagnose' %}" class="nature-glass-strip p-8 flex flex-col items-center justify-between text-center relative group tilt-3d">
+            <div class="w-16 h-16 bg-emerald-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition flex-shrink-0">
+                <!-- Search/Camera SVG icon -->
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <h3 class="text-lg font-black text-gray-950 tracking-tight mb-2">Teşhis Merkezi</h3>
+            <p class="text-gray-500 text-xs font-semibold leading-relaxed">Yapay zekanın yaprak üzerindeki hastalık lekelerine nasıl odaklandığını gösteren akıllı analiz portalı.</p>
+        </a>
+
+        <a href="{% url 'feed' %}" class="nature-glass-strip p-8 flex flex-col items-center justify-between text-center relative group tilt-3d">
+            <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-inner border border-amber-100 group-hover:scale-110 transition flex-shrink-0">
+                <!-- Chat/Square SVG icon -->
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+            </div>
+            <h3 class="text-lg font-black text-gray-950 tracking-tight mb-2">Köy Meydanı Ağı</h3>
+            <p class="text-gray-500 text-xs font-semibold leading-relaxed">Bölgeler arası tarım tartışmalarına katılın, diğer üreticilerle yaprak görselleri paylaşarak tavsiye alın.</p>
+        </a>
+        
+    </div>
+
+    <!-- Ziraat Ansiklopedisi Keşif Alanı -->
+    <div class="mt-16 mb-8 cascade-item delay-400">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+            <div>
+                <span class="text-[9px] font-black text-emerald-700 bg-emerald-100/70 border border-emerald-200/50 rounded-lg px-2.5 py-1 uppercase tracking-widest">AKILLI TARIM KÜTÜPHANESİ</span>
+                <h2 class="text-2xl font-black text-gray-950 tracking-tight mt-2.5">Ziraat Ansiklopedisini Keşfedin</h2>
+                <p class="text-gray-500 text-xs font-semibold leading-relaxed mt-1">Bitkilerinizin anatomik yapısını, yaygın biyolojik hastalıkları ve organik tedavi reçetelerini inceleyin.</p>
+            </div>
+            <a href="{% url 'encyclopedia' %}" class="inline-flex items-center px-4 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-600/10 hover:shadow-lg transition-all duration-300 self-start md:self-auto relative z-10">
+                Tüm Bitkileri Gör
+                <svg class="w-3.5 h-3.5 ml-1.5 text-white/90" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+        
+        <!-- Dynamic Plant Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for plant in featured_plants %}
+            <a href="{% url 'plant_detail' plant.id %}" class="nature-glass-strip p-5 flex flex-col justify-between group relative overflow-hidden tilt-3d min-h-[160px] border border-gray-150/20">
+                <!-- High-quality recognizable plant background image peaking through -->
+                {% if plant.image %}
+                    <img src="{{ plant.image.url }}" class="absolute inset-0 w-full h-full object-cover filter blur-[4px] scale-105 opacity-80 pointer-events-none z-0 transition-all duration-500 group-hover:scale-115" alt="{{ plant.name }}">
+                {% else %}
+                    <!-- Dynamic Unsplash fallback based on plant name -->
+                    <img src="{% if 'biber' in plant.name.lower %}https://images.unsplash.com/photo-1563483783225-b461c3db73e7?w=400&auto=format&fit=crop{% elif 'patates' in plant.name.lower %}https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&auto=format&fit=crop{% elif 'domates' in plant.name.lower %}https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&auto=format&fit=crop{% elif 'çilek' in plant.name.lower or 'cilek' in plant.name.lower %}https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&auto=format&fit=crop{% else %}https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=400&auto=format&fit=crop{% endif %}" class="absolute inset-0 w-full h-full object-cover filter blur-[4px] scale-105 opacity-80 pointer-events-none z-0 transition-all duration-500 group-hover:scale-115" alt="{{ plant.name }}">
+                {% endif %}
+                
+                <!-- White gradient overlay to keep high contrast text readability -->
+                <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/45 to-white/75 z-0 pointer-events-none"></div>
+
+                <div class="absolute -top-8 -right-8 w-20 h-20 bg-emerald-500/5 rounded-full blur-xl group-hover:scale-150 transition-all duration-500 z-10"></div>
+                <div class="relative z-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <!-- Category Badge -->
+                            <span class="text-[7.5px] font-black text-emerald-800 bg-emerald-50 border border-emerald-100/55 rounded-md px-1.5 py-0.5 uppercase tracking-wider relative z-10">{{ plant.category }}</span>
+                            
+                            <!-- Leaf Icon -->
+                            <svg class="w-4 h-4 text-emerald-600/60 group-hover:rotate-12 group-hover:scale-110 transition duration-300 relative z-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        
+                        <h3 class="text-base font-extrabold text-gray-950 tracking-tight mt-4 group-hover:text-emerald-700 transition duration-200 relative z-10">{{ plant.name }}</h3>
+                        {% if plant.scientific_name %}
+                        <p class="text-[9.5px] text-emerald-950/65 font-bold italic mt-0.5 relative z-10">{{ plant.scientific_name }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-t border-gray-150/60 flex items-center justify-between relative z-10">
+                    <span class="text-[9px] font-bold text-gray-400 group-hover:text-emerald-600 transition">İncele</span>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+            {% empty %}
+            <!-- Fallback template items -->
+            <a href="{% url 'encyclopedia' %}" class="nature-glass-strip p-5 flex flex-col justify-between group relative overflow-hidden tilt-3d min-h-[160px] border border-gray-150/20">
+                <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover filter blur-[4px] scale-105 opacity-80 pointer-events-none z-0 transition-all duration-500 group-hover:scale-115" alt="Domates">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/45 to-white/75 z-0 pointer-events-none"></div>
+                <div class="relative z-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <span class="text-[7.5px] font-black text-emerald-800 bg-emerald-50 border border-emerald-100/55 rounded-md px-1.5 py-0.5 uppercase tracking-wider relative z-10">Sebzeler</span>
+                            <svg class="w-4 h-4 text-emerald-600/60 relative z-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <h3 class="text-base font-extrabold text-gray-950 tracking-tight mt-4 group-hover:text-emerald-700 transition duration-200 relative z-10">Domates</h3>
+                        <p class="text-[9.5px] text-emerald-950/65 font-bold italic mt-0.5 relative z-10">Solanum lycopersicum</p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-150/60 flex items-center justify-between relative z-10">
+                    <span class="text-[9px] font-bold text-gray-400 group-hover:text-emerald-600 transition">İncele</span>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+            <a href="{% url 'encyclopedia' %}" class="nature-glass-strip p-5 flex flex-col justify-between group relative overflow-hidden tilt-3d min-h-[160px] border border-gray-150/20">
+                <img src="https://images.unsplash.com/photo-1563483783225-b461c3db73e7?w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover filter blur-[4px] scale-105 opacity-80 pointer-events-none z-0 transition-all duration-500 group-hover:scale-115" alt="Biber">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/45 to-white/75 z-0 pointer-events-none"></div>
+                <div class="relative z-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <span class="text-[7.5px] font-black text-emerald-800 bg-emerald-50 border border-emerald-100/55 rounded-md px-1.5 py-0.5 uppercase tracking-wider relative z-10">Sebzeler</span>
+                            <svg class="w-4 h-4 text-emerald-600/60 relative z-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <h3 class="text-base font-extrabold text-gray-950 tracking-tight mt-4 group-hover:text-emerald-700 transition duration-200 relative z-10">Biber</h3>
+                        <p class="text-[9.5px] text-emerald-950/65 font-bold italic mt-0.5 relative z-10">Capsicum annuum</p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-150/60 flex items-center justify-between relative z-10">
+                    <span class="text-[9px] font-bold text-gray-400 group-hover:text-emerald-600 transition">İncele</span>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+            <a href="{% url 'encyclopedia' %}" class="nature-glass-strip p-5 flex flex-col justify-between group relative overflow-hidden tilt-3d min-h-[160px] border border-gray-150/20">
+                <img src="https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover filter blur-[4px] scale-105 opacity-80 pointer-events-none z-0 transition-all duration-500 group-hover:scale-115" alt="Üzüm">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/45 to-white/75 z-0 pointer-events-none"></div>
+                <div class="relative z-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <span class="text-[7.5px] font-black text-emerald-800 bg-emerald-50 border border-emerald-100/55 rounded-md px-1.5 py-0.5 uppercase tracking-wider relative z-10">Meyveler</span>
+                            <svg class="w-4 h-4 text-emerald-600/60 relative z-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <h3 class="text-base font-extrabold text-gray-950 tracking-tight mt-4 group-hover:text-emerald-700 transition duration-200 relative z-10">Üzüm</h3>
+                        <p class="text-[9.5px] text-emerald-950/65 font-bold italic mt-0.5 relative z-10">Vitis vinifera</p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-150/60 flex items-center justify-between relative z-10">
+                    <span class="text-[9px] font-bold text-gray-400 group-hover:text-emerald-600 transition">İncele</span>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+            <a href="{% url 'encyclopedia' %}" class="nature-glass-strip p-5 flex flex-col justify-between group relative overflow-hidden tilt-3d min-h-[160px] border border-gray-150/20">
+                <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover filter blur-[4px] scale-105 opacity-80 pointer-events-none z-0 transition-all duration-500 group-hover:scale-115" alt="Patates">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/45 to-white/75 z-0 pointer-events-none"></div>
+                <div class="relative z-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <span class="text-[7.5px] font-black text-emerald-800 bg-emerald-50 border border-emerald-100/55 rounded-md px-1.5 py-0.5 uppercase tracking-wider relative z-10">Sebzeler</span>
+                            <svg class="w-4 h-4 text-emerald-600/60 relative z-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <h3 class="text-base font-extrabold text-gray-950 tracking-tight mt-4 group-hover:text-emerald-700 transition duration-200 relative z-10">Patates</h3>
+                        <p class="text-[9.5px] text-emerald-950/65 font-bold italic mt-0.5 relative z-10">Solanum tuberosum</p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-150/60 flex items-center justify-between relative z-10">
+                    <span class="text-[9px] font-bold text-gray-400 group-hover:text-emerald-600 transition">İncele</span>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Geolocation and Dynamic Weather Widget logic
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateLocalTime() {
+            const now = new Date();
+            const days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+            const dayName = days[now.getDay()];
+            const timeStr = `${dayName} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            const timeEl = document.getElementById('weather-update-time');
+            if (timeEl) {
+                timeEl.innerText = `Güncelleme: ${timeStr}`;
+            }
+        }
+
+        function updateFungalRisk(temp, humidity) {
+            const T = parseFloat(temp) || 0;
+            const H = parseFloat(humidity) || 0;
+            
+            // Scientific risk formula: Risk = ((H - 30) / 70) * (T / 30) * 100 clamped to 0-100
+            let risk = 0;
+            if (H > 30 && T > 0) {
+                risk = ((H - 30) / 70) * (T / 30) * 100;
+            }
+            risk = Math.max(0, Math.min(100, Math.round(risk)));
+            
+            const bar = document.getElementById('fungal-risk-bar');
+            const badge = document.getElementById('fungal-risk-badge');
+            const advice = document.getElementById('fungal-risk-advice');
+            
+            if (bar) bar.style.width = `${risk}%`;
+            
+            if (badge && advice) {
+                if (risk < 35) {
+                    badge.innerText = `Düşük (%${risk})`;
+                    badge.className = "text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-emerald-500/30 text-emerald-200 border border-emerald-500/20";
+                    advice.innerText = "Nem ve sıcaklık koşulları dengeli. Mantar enfeksiyonu yayılma riski son derece düşük. Rutin sulamaya devam edebilirsiniz.";
+                } else if (risk < 70) {
+                    badge.innerText = `Orta (%${risk})`;
+                    badge.className = "text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-amber-500/30 text-amber-200 border border-amber-500/20";
+                    advice.innerText = "Sıcaklık ve nem mantar sporlarının gelişimi için elverişli. Yaprak ıslaklığını azaltın ve havalandırmayı artırın.";
+                } else {
+                    badge.innerText = `KRİTİK (%${risk})`;
+                    badge.className = "text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-red-500/30 text-red-200 border border-red-500/20 animate-pulse";
+                    advice.innerText = "DİKKAT! Yüksek nem ve optimum sıcaklık nedeniyle mantar riski alarm seviyesinde. Acil koruyucu organik bakır uygulaması yapın.";
+                }
+            }
+        }
+
+        function fetchFallbackWeather() {
+            fetch('/hesap/api/hava-durumu/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('weather-location').innerText = data.city;
+                    document.getElementById('weather-status').innerText = data.desc;
+                    document.getElementById('weather-temp-val').innerText = `${data.temp}°`;
+                    document.getElementById('weather-humidity-val').innerText = `%${data.humidity}`;
+                    document.getElementById('weather-precipitation-val').innerText = `%${data.precipitation !== undefined ? data.precipitation : 10}`;
+                    document.getElementById('weather-wind-val').innerText = `${data.wind_speed || 14} km/h`;
+                    document.getElementById('weather-clouds-val').innerText = `%${data.clouds !== undefined ? data.clouds : 40}`;
+                    updateLocalTime();
+                    updateFungalRisk(data.temp, data.humidity);
+
+                    if (data.humidity > 70) {
+                        const weatherCard = document.getElementById('weather-card');
+                        if (weatherCard) {
+                            weatherCard.classList.replace('weather-gradient-blue', 'weather-gradient-orange');
+                        }
+                        document.getElementById('weather-status').innerText += " (Mantar Riski!)";
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('weather-location').innerText = "Pendik, İstanbul";
+                    document.getElementById('weather-status').innerText = "Bulutlu";
+                    document.getElementById('weather-temp-val').innerText = "18°";
+                    document.getElementById('weather-humidity-val').innerText = "%52";
+                    document.getElementById('weather-precipitation-val').innerText = "%10";
+                    document.getElementById('weather-wind-val').innerText = "14 km/h";
+                    document.getElementById('weather-clouds-val').innerText = "%40";
+                    updateLocalTime();
+                    updateFungalRisk(18, 52);
+                });
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+            fetchFallbackWeather();
+        }
+
+        function success(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            fetch(`/hesap/api/hava-durumu/?lat=${lat}&lon=${lon}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && !data.error) {
+                        document.getElementById('weather-location').innerText = data.city;
+                        document.getElementById('weather-status').innerText = data.desc;
+                        document.getElementById('weather-temp-val').innerText = `${data.temp}°`;
+                        document.getElementById('weather-humidity-val').innerText = `%${data.humidity}`;
+                        document.getElementById('weather-precipitation-val').innerText = `%${data.precipitation !== undefined ? data.precipitation : 10}`;
+                        document.getElementById('weather-wind-val').innerText = `${data.wind_speed || 14} km/h`;
+                        document.getElementById('weather-clouds-val').innerText = `%${data.clouds !== undefined ? data.clouds : 40}`;
+                        updateLocalTime();
+                        updateFungalRisk(data.temp, data.humidity);
+
+                        if (data.humidity > 70) {
+                            const weatherCard = document.getElementById('weather-card');
+                            if (weatherCard) {
+                                weatherCard.classList.replace('weather-gradient-blue', 'weather-gradient-orange');
+                            }
+                            document.getElementById('weather-status').innerText += " (Mantar Riski!)";
+                        }
+                    } else {
+                        fetchFallbackWeather();
+                    }
+                })
+                .catch(() => {
+                    fetchFallbackWeather();
+                });
+        }
+
+        function error() {
+            fetchFallbackWeather();
+        }
+
+        // Collapsible weather details drawer toggle
+        const detailsBtn = document.getElementById('weather-details-btn');
+        const detailsDrawer = document.getElementById('weather-details-drawer');
+        let expanded = false;
+        
+        if (detailsBtn && detailsDrawer) {
+            detailsBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                expanded = !expanded;
+                if (expanded) {
+                    detailsDrawer.classList.remove('max-h-0', 'opacity-0');
+                    detailsDrawer.classList.add('max-h-[300px]', 'opacity-100', 'border-t', 'border-white/15', 'pt-3', 'mt-4');
+                    detailsBtn.innerText = "Kapat";
+                } else {
+                    detailsDrawer.classList.remove('max-h-[300px]', 'opacity-100', 'border-t', 'border-white/15', 'pt-3', 'mt-4');
+                    detailsDrawer.classList.add('max-h-0', 'opacity-0');
+                    detailsBtn.innerText = "Detay Gör";
+                }
+            });
+        }
+
+        // Active 3D Parallax Tilt effect on home items
+        function init3dTilt() {
+            const elements = document.querySelectorAll('.tilt-3d');
+            elements.forEach(el => {
+                el.style.transformStyle = 'preserve-3d';
+                el.style.transition = 'transform 0.15s ease-out, box-shadow 0.25s ease';
+                
+                el.addEventListener('mousemove', e => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const rotateX = -((y / rect.height) - 0.5) * 8; // max 8 degrees
+                    const rotateY = ((x / rect.width) - 0.5) * 8;
+                    
+                    el.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    el.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
+                    el.style.transition = 'transform 0.3s ease-in-out, box-shadow 0.3s ease';
+                });
+            });
+        }
+
+        init3dTilt();
+    });
+</script>
+{% endblock %}

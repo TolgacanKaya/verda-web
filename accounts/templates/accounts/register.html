@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block title %}Kayıt Ol | Verda{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts - Plus Jakarta Sans -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    .premium-font {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Premium Glassmorphic Form Card */
+    .glass-form-card {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(28px) saturate(180%);
+        -webkit-backdrop-filter: blur(28px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 32px;
+        box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.03);
+    }
+    
+    /* Input Styling Override */
+    input[type="text"], input[type="password"], input[type="email"] {
+        width: 100% !important;
+        padding: 14px 20px !important;
+        background: rgba(255, 255, 255, 0.5) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        border-radius: 16px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        color: #111827 !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.01) !important;
+    }
+    
+    input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+        outline: none !important;
+        background: rgba(255, 255, 255, 0.8) !important;
+        border-color: rgba(16, 185, 129, 0.5) !important;
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.01) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    /* Radar Pulse animation */
+    @keyframes radar-pulse {
+        0% { transform: scale(0.95); opacity: 0.8; }
+        50% { transform: scale(1.05); opacity: 0.4; }
+        100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .radar-pulse-effect {
+        animation: radar-pulse 4s infinite ease-in-out;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Elegant Ambient Background Blobs -->
+<div class="absolute -top-[120px] left-0 w-full h-[520px] bg-gradient-to-b from-brand-100/30 to-transparent -z-10"></div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 premium-font">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center min-h-[calc(100vh-180px)]">
+        
+        <!-- Left Side: Interactive Futuristic Dashboard / Showcase panel -->
+        <div class="lg:col-span-6 space-y-8 pr-0 lg:pr-8 hidden lg:block">
+            <div class="space-y-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-[10px] font-black uppercase tracking-widest">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    Yapay Zeka Destekli Tarım Ağı
+                </span>
+                <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-none bg-gradient-to-r from-gray-950 via-gray-900 to-brand-900 bg-clip-text text-transparent">
+                    Aramıza Katılarak Ayrıcalıkları Yakalayın
+                </h1>
+                <p class="text-gray-500 font-semibold text-sm leading-relaxed max-w-xl">
+                    Hemen ücretsiz bir üretici profili oluşturun, tarlanızdaki mantar riski bildirimlerini, anlık hava durumunu takip edin ve Grad-CAM yapay zeka analizlerinizi kaydedin.
+                </p>
+            </div>
+
+            <!-- Features Showcase Grid (Frosted Glass micro-strips) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div class="p-5 rounded-2xl bg-white/40 border border-white/60 shadow-sm flex items-start gap-4">
+                    <div class="p-2.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 rounded-xl">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 002 2h2a2 2 0 002-2m-6 9l2 2 4-4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-gray-900 text-xs uppercase tracking-wide">Grad-CAM Analizi</h4>
+                        <p class="text-[11px] text-gray-500 font-semibold mt-1">Yapay zekanın teşhisi koyarken tam olarak nereye odaklandığını görün.</p>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-white/40 border border-white/60 shadow-sm flex items-start gap-4">
+                    <div class="p-2.5 bg-blue-500/10 border border-blue-500/20 text-blue-600 rounded-xl">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-gray-900 text-xs uppercase tracking-wide">Rapor Arşivi</h4>
+                        <p class="text-[11px] text-gray-500 font-semibold mt-1">Teşhis geçmişinizi buluta kaydedip tarlanızın sağlık geçmişini izleyin.</p>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-white/40 border border-white/60 shadow-sm flex items-start gap-4">
+                    <div class="p-2.5 bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-gray-900 text-xs uppercase tracking-wide">Ziraat Ansiklopedisi</h4>
+                        <p class="text-[11px] text-gray-500 font-semibold mt-1">Hastalıkların belirtilerini, ziraat mühendisi reçetelerini ve organik tedbirleri inceleyin.</p>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-white/40 border border-white/60 shadow-sm flex items-start gap-4">
+                    <div class="p-2.5 bg-purple-500/10 border border-purple-500/20 text-purple-600 rounded-xl">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-gray-900 text-xs uppercase tracking-wide">Köy Meydanı</h4>
+                        <p class="text-[11px] text-gray-500 font-semibold mt-1">Geniş üretici ve mühendis topluluğumuzla fikir alışverişi yapın.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Platform Stats Board -->
+            <div class="p-6 rounded-3xl bg-slate-900 text-white relative overflow-hidden shadow-lg shadow-emerald-950/20 border border-white/5">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none radar-pulse-effect"></div>
+                <div class="relative z-10 grid grid-cols-3 gap-4 text-center">
+                    <div>
+                        <p class="text-2xl font-black text-emerald-400">125K+</p>
+                        <p class="text-[9px] font-black text-gray-400 uppercase mt-1 tracking-wider">Yapay Zeka Analizi</p>
+                    </div>
+                    <div class="border-x border-white/10">
+                        <p class="text-2xl font-black text-emerald-400">98.6%</p>
+                        <p class="text-[9px] font-black text-gray-400 uppercase mt-1 tracking-wider">Teşhis İsabeti</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-black text-emerald-400">10K+</p>
+                        <p class="text-[9px] font-black text-gray-400 uppercase mt-1 tracking-wider">Aktif Üretici</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: The Form Card -->
+        <div class="lg:col-span-6 w-full max-w-md mx-auto relative">
+            <div class="glass-form-card p-8 md:p-10 relative z-10">
+                <div class="text-center mb-8 relative">
+                    <div class="absolute inset-0 m-auto w-16 h-16 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+                    
+                    <div class="inline-flex justify-center items-center w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100/60 shadow-inner text-emerald-600 mb-5 relative z-10">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-black text-gray-900 tracking-tight leading-none">Aramıza Katılın</h2>
+                    <p class="text-gray-500 mt-3 font-semibold text-xs leading-relaxed max-w-[280px] mx-auto">Yapay zeka destekli tarım ağına ilk adımınızı atarak hemen yerinizi alın.</p>
+                </div>
+                
+                <form method="POST" novalidate class="space-y-6">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                    <div class="space-y-2">
+                        <label class="block text-xs font-black text-gray-600 uppercase tracking-widest">{{ field.label }}</label>
+                        <div>
+                            {{ field }}
+                        </div>
+                        {% if field.help_text %}
+                            <p class="text-[10px] text-gray-400 font-bold leading-normal bg-gray-500/5 p-3 rounded-xl border border-gray-200/40">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p class="text-xs text-red-600 font-bold pt-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs tracking-wider uppercase rounded-2xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-all duration-300 hover:-translate-y-0.5 mt-4">
+                        Hesabımı Oluştur
+                    </button>
+                </form>
+                
+                <p class="mt-8 text-center text-xs text-gray-500 font-bold">
+                    Zaten üye misiniz? <a href="{% url 'login' %}" class="text-emerald-600 font-black hover:text-emerald-700 hover:underline">Giriş Yapın</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

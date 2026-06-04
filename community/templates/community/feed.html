@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block title %}Köy Meydanı | Verda{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    
+    <div class="mb-8 flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-extrabold text-gray-900 flex items-center">
+                <svg class="w-8 h-8 text-brand-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                Köy Meydanı
+            </h1>
+            <p class="text-gray-500 mt-1">Diğer çiftçilere sorun, tecrübelerinizi paylaşın.</p>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 mb-10">
+        <div class="flex space-x-4">
+            {% if user.profile.profile_picture %}
+                <img src="{{ user.profile.profile_picture.url }}" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white flex-shrink-0">
+            {% else %}
+                <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0">
+                    {{ user.username|make_list|first|upper }}
+                </div>
+            {% endif %}
+            <div class="flex-grow">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="mb-4">
+                        {% if field.name != 'content' %}
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">{{ field.label }}</label>
+                        {% endif %}
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+
+                    <div class="flex justify-end mt-2">
+                        <button type="submit" class="bg-brand-600 text-white font-bold py-2 px-6 rounded-full hover:bg-brand-700 shadow transition-colors">
+                            Paylaş
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="bg-gradient-to-r from-brand-50 to-white p-8 rounded-3xl border border-brand-100 shadow-sm mb-10 text-center relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-200 rounded-full opacity-50 blur-3xl"></div>
+        <h2 class="text-2xl font-extrabold text-gray-900 mb-3 relative z-10">Sorularınız Mı Var? Uzmanlara Danışın!</h2>
+        <p class="text-gray-600 mb-6 relative z-10">Tarlanızdaki bitki hastalıklarını paylaşmak, ziraat mühendislerinden ve diğer çiftçilerden ücretsiz tavsiye almak için aramıza katılın.</p>
+        <div class="flex justify-center space-x-4 relative z-10">
+            <a href="{% url 'register' %}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-md">Ücretsiz Kayıt Ol</a>
+            <a href="{% url 'login' %}?next={{ request.path }}" class="bg-white hover:bg-gray-50 text-gray-700 font-bold py-3 px-8 rounded-xl border border-gray-200 transition">Giriş Yap</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="space-y-6">
+        {% for post in posts %}
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+            <div class="p-5 flex items-center justify-between border-b border-gray-50">
+                <div class="flex items-center space-x-3">
+                    {% if post.author.profile_picture %}
+                        <img src="{{ post.author.profile_picture.url }}" class="w-10 h-10 rounded-full object-cover shadow-sm border border-gray-100">
+                    {% else %}
+                        <div class="w-10 h-10 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-bold text-lg">
+                            {{ post.author.user.username|make_list|first|upper }}
+                        </div>
+                    {% endif %}
+                    <div>
+                        <h3 class="font-bold text-gray-900">{{ post.author.user.username }}</h3>
+                        <p class="text-xs text-gray-400">{{ post.created_at|timesince }} önce</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    {% if post.related_plant %}
+                    <span class="bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1.5 rounded-xl border border-brand-100 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-brand-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        {{ post.related_plant.name }}
+                    </span>
+                    {% endif %}
+                    {% if request.user.is_authenticated and post.author.user == request.user or request.user.is_superuser %}
+                    <form method="POST" action="{% url 'delete_post' post.id %}" onsubmit="return confirm('Bu gönderiyi silmek istediğinizden emin misiniz?');" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-red-500 hover:text-red-700 transition p-1" title="Gönderiyi Sil">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="p-5">
+                <p class="text-gray-800 leading-relaxed mb-4">{{ post.content }}</p>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" class="rounded-xl w-full h-auto max-h-96 object-cover border border-gray-100">
+                {% endif %}
+            </div>
+            
+            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+                <div class="flex items-center space-x-4 text-gray-500">
+                    <span class="flex items-center text-sm font-bold">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        {{ post.comments.count }} Yorum
+                    </span>
+                    {% if post.is_solved %}
+                        <span class="flex items-center text-sm font-bold text-green-600">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Çözüldü
+                        </span>
+                    {% endif %}
+                </div>
+                <a href="{% url 'post_detail' post.id %}" class="text-brand-600 font-bold text-sm hover:underline">
+                    Yorum Yap / İncele
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-16 bg-white rounded-3xl border border-dashed border-gray-200">
+            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+            <h3 class="text-lg font-bold text-gray-900">Meydan Şimdilik Boş</h3>
+            <p class="text-gray-500">İlk gönderiyi siz paylaşın ve tartışmayı başlatın!</p>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Django'nun id_related_plant olarak ürettiği Select alanını bul ve akıllandır
+        $('#id_related_plant').select2({
+            placeholder: "Bitki arayın (Örn: Domates)",
+            allowClear: true,
+            width: '100%',
+            language: {
+                noResults: function() {
+                    return "Bitki bulunamadı.";
+                }
+            }
+        });
+
+        // Tailwind ile Select2 arayüzünün çakışmaması için ufak stil düzeltmesi
+        $('.select2-selection').css({
+            'border-radius': '0.75rem',
+            'border-color': '#D1D5DB',
+            'padding': '0.3rem',
+            'height': 'auto'
+        });
+    });
+</script>
+{% endblock %}

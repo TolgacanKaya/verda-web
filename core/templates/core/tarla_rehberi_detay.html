@@ -1,0 +1,1046 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ data.title }} | Verda Bilimsel Ziraat Akademisi{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts - Plus Jakarta Sans & Playfair Display for Elite Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    .premium-font {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .accent-font {
+        font-family: 'Playfair Display', serif;
+    }
+    .mono-font {
+        font-family: 'Fira Code', monospace;
+    }
+
+    /* Dynamic animated mesh background */
+    .mesh-gradient-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 900px;
+        overflow: hidden;
+        z-index: -10;
+        pointer-events: none;
+    }
+    .mesh-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(110px);
+        opacity: 0.22;
+        animation: floatOrb 15s infinite alternate ease-in-out;
+    }
+    .orb-1 {
+        top: -10%;
+        left: 10%;
+        width: 480px;
+        height: 480px;
+        background: radial-gradient(circle, #10b981 0%, rgba(16,185,129,0) 70%);
+    }
+    .orb-2 {
+        top: 15%;
+        right: 10%;
+        width: 520px;
+        height: 520px;
+        background: radial-gradient(circle, #06b6d4 0%, rgba(6,182,212,0) 70%);
+        animation-delay: -4s;
+    }
+    .orb-3 {
+        top: 45%;
+        left: 15%;
+        width: 380px;
+        height: 380px;
+        background: radial-gradient(circle, #f59e0b 0%, rgba(245,158,11,0) 70%);
+        animation-delay: -8s;
+    }
+
+    @keyframes floatOrb {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(40px, -30px) scale(1.15); }
+        100% { transform: translate(-30px, 40px) scale(0.9); }
+    }
+
+    /* Premium layered Glassmorphism */
+    .premium-glass-panel {
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(30px) saturate(190%);
+        -webkit-backdrop-filter: blur(30px) saturate(190%);
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        border-radius: 40px;
+        box-shadow: 
+            0 30px 60px -15px rgba(0, 0, 0, 0.03),
+            inset 0 1px 0px rgba(255, 255, 255, 0.9);
+    }
+    
+    .premium-glass-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1.5px solid rgba(255, 255, 255, 0.75);
+        border-radius: 32px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow: hidden;
+    }
+    .premium-glass-card:hover {
+        background: rgba(255, 255, 255, 0.7);
+        border-color: rgba(255, 255, 255, 0.95);
+        transform: translateY(-5px);
+        box-shadow: 
+            0 25px 50px -15px rgba(16, 185, 129, 0.12),
+            0 0 20px rgba(16, 185, 129, 0.02);
+    }
+
+    /* Elegant double gradient borders by type */
+    .glow-border-emerald {
+        border: 1.5px solid transparent !important;
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        background-image: 
+            linear-gradient(to bottom, rgba(255,255,255,0.75), rgba(255,255,255,0.4)), 
+            linear-gradient(135deg, rgba(16, 185, 129, 0.5) 0%, rgba(20, 184, 166, 0.3) 100%);
+    }
+    .glow-border-emerald:hover {
+        box-shadow: 0 25px 50px -15px rgba(16, 185, 129, 0.15) !important;
+    }
+    
+    .glow-border-rose {
+        border: 1.5px solid transparent !important;
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        background-image: 
+            linear-gradient(to bottom, rgba(255,255,255,0.75), rgba(255,255,255,0.4)), 
+            linear-gradient(135deg, rgba(244, 63, 94, 0.5) 0%, rgba(249, 115, 22, 0.3) 100%);
+    }
+    .glow-border-rose:hover {
+        box-shadow: 0 25px 50px -15px rgba(244, 63, 94, 0.15) !important;
+    }
+
+    /* Holographic Risk Dial with 3D perspective shift on hover */
+    .hologram-risk-dial {
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+        transform-style: preserve-3d;
+    }
+    .hologram-risk-dial:hover {
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Laser Scanner Line Animation */
+    @keyframes laser-scan {
+        0% { top: 0%; opacity: 0; }
+        15% { opacity: 0.85; }
+        85% { opacity: 0.85; }
+        100% { top: 100%; opacity: 0; }
+    }
+    .laser-scan-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2.5px;
+        background: linear-gradient(90deg, transparent, #10b981, transparent);
+        box-shadow: 0 0 10px #10b981, 0 0 20px #10b981;
+        animation: laser-scan 3s infinite linear;
+        pointer-events: none;
+        z-index: 20;
+    }
+
+    /* Typographic Drop Cap for Case Study */
+    .drop-cap::first-letter {
+        float: left;
+        font-family: 'Playfair Display', serif;
+        font-size: 3.8rem;
+        line-height: 3rem;
+        padding-top: 4px;
+        padding-right: 12px;
+        padding-left: 2px;
+        font-weight: 900;
+        color: #047857; /* Emerald 700 */
+        text-shadow: 1px 1px 0px rgba(255,255,255,0.9);
+    }
+
+    /* Dynamic Rising Bubbles */
+    @keyframes rise-bubble {
+        0% { transform: translateY(105%) scale(0.3); opacity: 0; }
+        20% { opacity: 0.9; }
+        80% { opacity: 0.9; }
+        100% { transform: translateY(-30px) scale(1.3); opacity: 0; }
+    }
+    .synth-bubble {
+        position: absolute;
+        bottom: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.35);
+        border: 1px solid rgba(255,255,255,0.6);
+        animation: rise-bubble 2.5s infinite ease-in;
+    }
+
+    /* Interactive tab button highlights */
+    .console-tab-btn {
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .console-tab-btn.active {
+        background: rgba(16, 185, 129, 0.08);
+        border-color: rgba(16, 185, 129, 0.4);
+        color: #065f46;
+        box-shadow: inset 0 2px 4px rgba(16, 185, 129, 0.05);
+    }
+
+    /* Pulse wave effect on flask */
+    @keyframes liquid-wave {
+        0% { transform: translateX(0) scaleY(1); }
+        50% { transform: translateX(-25%) scaleY(1.08); }
+        100% { transform: translateX(0) scaleY(1); }
+    }
+    .flask-liquid-wave {
+        animation: liquid-wave 4s infinite ease-in-out;
+    }
+
+    /* Academic print styles */
+    @media print {
+        body {
+            background: white !important;
+            color: black !important;
+            font-size: 12pt !important;
+        }
+        .print\:hidden, nav, footer, button, form, .back-btn, #synth-btn, #audio-toggle-btn, .laser-scan-line {
+            display: none !important;
+        }
+        .premium-glass-panel, .premium-glass-card, .shield-card, .parchment-glass-card {
+            background: transparent !important;
+            border: 1.5px solid #333 !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+            border-radius: 12px !important;
+            margin-bottom: 20px !important;
+            page-break-inside: avoid !important;
+        }
+        .mesh-gradient-container {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Doğa Ambient Arka Plan Görselleri -->
+<div class="mesh-gradient-container">
+    <div class="mesh-orb orb-1"></div>
+    <div class="mesh-orb orb-2"></div>
+    <div class="mesh-orb orb-3"></div>
+</div>
+
+<div class="max-w-6xl mx-auto px-4 py-12 premium-font">
+
+    <!-- Top Navigation Row -->
+    <div class="flex flex-wrap items-center justify-between mb-10 gap-4 print:hidden">
+        <div class="flex items-center gap-3">
+            <a href="{% url 'tarla_rehberi' %}" class="back-btn group inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-white/60 hover:bg-white/90 border border-gray-150 text-xs font-black text-emerald-800 tracking-widest uppercase transition-all duration-300 shadow-sm">
+                <svg class="back-arrow w-4.5 h-4.5 text-emerald-700 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
+                </svg>
+                Rehbere Dön
+            </a>
+
+            <!-- Scientific Report PDF Download -->
+            <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-xs font-black text-white tracking-wider uppercase transition-all duration-300 shadow-md shadow-emerald-500/10">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.844l4.9-4.9m0 0l4.9 4.9m-4.9-4.9v10.5m-6.42-3.184A9 9 0 0118.36 4.64"/></svg>
+                Bilimsel Rapor Al (PDF/Yazdır)
+            </button>
+
+            <!-- Audio Toggle Button (Premium 2026 feature) -->
+            <button onclick="toggleAudio()" id="audio-toggle-btn" class="p-3 rounded-2xl border border-white/70 bg-white/60 text-gray-500 hover:text-emerald-700 active:scale-95 shadow-sm transition flex items-center justify-center" title="Ses Arayüzünü Aç/Kapat">
+                <!-- Speaker Off SVG -->
+                <svg id="audio-off-icon" class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
+                <!-- Speaker On SVG (Hidden by default) -->
+                <svg id="audio-on-icon" class="w-4.5 h-4.5 hidden text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+            </button>
+
+            {% if user.is_staff %}
+            <a href="{% url 'update_guide_item' data.slug %}" class="inline-flex items-center gap-1.5 px-5 py-3 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 text-xs font-black text-amber-800 tracking-wider uppercase transition-all duration-300 shadow-sm">
+                <svg class="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                Güncelle
+            </a>
+            <form action="{% url 'delete_guide_item' data.slug %}" method="POST" class="inline" onsubmit="return confirm('Bu rehber içeriğini silmek istediğinize emin misiniz? Bu işlem geri alınamaz!');">
+                {% csrf_token %}
+                <button type="submit" class="inline-flex items-center gap-1.5 px-5 py-3 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-xs font-black text-rose-800 tracking-wider uppercase transition-all duration-300 shadow-sm">
+                    <svg class="w-4 h-4 text-rose-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    Sil
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+        <!-- Scientific Academic Header Tag -->
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-800 text-[10px] font-black tracking-widest uppercase shadow-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+            VERDA BİLİMSEL TEŞHİS RAPORU
+        </span>
+    </div>
+
+    <!-- Header Section (Hero Panel) -->
+    <div class="premium-glass-panel p-8 md:p-12 mb-10 relative overflow-hidden">
+        <!-- Botanical leaf outline watermark SVG -->
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 text-emerald-800/5 pointer-events-none transform rotate-45">
+            <svg fill="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                <path d="M17 8C8 10 5.9 16.1 5.1 19c-.1.3-.4.3-.5.1-.3-.6-.7-1.7-.7-3.1 0-4.6 3.1-9 8.1-11C15 4 17 5 17 8zM12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 14.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5V13c0-.3.2-.5.5-.5s.5.2.5.5v3.5zm0-5.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5V8c0-.3.2-.5.5-.5s.5.2.5.5v3zm3 4.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5s.5.2.5.5v6z"/>
+            </svg>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
+            <div>
+                <!-- Category and Season Badges -->
+                <div class="flex flex-wrap items-center gap-2.5 mb-5">
+                    <span class="px-3.5 py-1 text-[9px] font-black tracking-widest text-emerald-950 bg-emerald-500/15 rounded-lg border border-emerald-500/20 uppercase shadow-inner">
+                        {{ data.category }}
+                    </span>
+
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1 text-[9px] font-black tracking-widest text-gray-800 bg-white/80 rounded-lg border border-gray-250 uppercase shadow-sm">
+                        {% if data.season == 'İlkbahar' %}
+                            <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 19V6m0 0a5 5 0 015 5c0 3-5 5-5 5m0-10a5 5 0 00-5 5c0 3 5 5 5 5"></path></svg>
+                        {% elif data.season == 'Yaz' %}
+                            <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                        {% elif data.season == 'Sonbahar' %}
+                            <svg class="w-3.5 h-3.5 text-orange-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 8h12M3 16h15"></path></svg>
+                        {% elif data.season == 'Kış' %}
+                            <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3m14.364-6.364L6.636 17.364m0-10.728l10.728 10.728"></path></svg>
+                        {% else %}
+                            <svg class="w-3.5 h-3.5 text-teal-600" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                        {% endif %}
+                        {{ data.season }} Gelişim Dönemi
+                    </span>
+                </div>
+
+                <h1 class="text-3xl md:text-5xl font-black text-gray-955 tracking-tight leading-tight mb-3">
+                    {{ data.title }}
+                </h1>
+                
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="h-px w-8 bg-emerald-500/50"></span>
+                    <p class="accent-font italic text-lg text-emerald-800 font-bold">
+                        {{ data.scientific_name }}
+                    </p>
+                    <span class="h-px w-8 bg-emerald-500/50"></span>
+                </div>
+
+                <p class="text-sm text-gray-600 font-semibold leading-relaxed max-w-3xl">
+                    {{ data.description }}
+                </p>
+            </div>
+
+            <!-- Risk Level Panel (Holographic SVG Dial) -->
+            <div class="flex-shrink-0 self-start md:self-center">
+                <div class="hologram-risk-dial p-6 bg-white/45 backdrop-blur-md rounded-[32px] border border-white/60 text-center flex flex-col items-center justify-center relative group cursor-pointer tilt-3d shadow-inner" style="perspective: 1000px;">
+                    <div class="relative w-32 h-32 flex items-center justify-center">
+                        <!-- SVG Ring -->
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" stroke="rgba(0,0,0,0.04)" stroke-width="6" fill="transparent" />
+                            <circle cx="50" cy="50" r="40" 
+                                    class="transition-all duration-1000 ease-out"
+                                    stroke="{% if data.risk_level == 'Çok Yüksek' %}#f43f5e{% elif data.risk_level == 'Yüksek' %}#f97316{% elif data.risk_level == 'Orta' or data.risk_level == 'Orta-Yüksek' %}#eab308{% else %}#10b981{% endif %}" 
+                                    stroke-width="7" 
+                                    fill="transparent" 
+                                    stroke-dasharray="251.2" 
+                                    stroke-dashoffset="{% if data.risk_level == 'Çok Yüksek' %}25.1{% elif data.risk_level == 'Yüksek' %}62.8{% elif data.risk_level == 'Orta' or data.risk_level == 'Orta-Yüksek' %}113.0{% else %}188.4{% endif %}"
+                                    stroke-linecap="round" />
+                        </svg>
+                        
+                        <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
+                            <div class="w-2.5 h-2.5 rounded-full {% if data.risk_level == 'Çok Yüksek' %}bg-rose-500 animate-ping{% elif data.risk_level == 'Yüksek' %}bg-orange-500{% elif data.risk_level == 'Orta' or data.risk_level == 'Orta-Yüksek' %}bg-yellow-500{% else %}bg-emerald-500{% endif %}"></div>
+                            <span class="text-[8px] font-black text-gray-400 tracking-widest uppercase mt-1">RİSK SEVİYESİ</span>
+                            <span class="text-sm font-black text-gray-800 tracking-tight">
+                                {% if data.risk_level == 'Çok Yüksek' %}90%{% elif data.risk_level == 'Yüksek' %}75%{% elif data.risk_level == 'Orta' or data.risk_level == 'Orta-Yüksek' %}55%{% else %}25%{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <span class="block text-[8px] font-black tracking-widest uppercase text-gray-500">TEHLİKE DERECESİ</span>
+                        <span class="text-xs font-black {% if data.risk_level == 'Çok Yüksek' %}text-rose-600{% elif data.risk_level == 'Yüksek' %}text-orange-500{% elif data.risk_level == 'Orta' or data.risk_level == 'Orta-Yüksek' %}text-yellow-600{% else %}text-emerald-600{% endif %}">
+                            {{ data.risk_level }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION: SCI-FI LABORATORY ANALYZER CONSOLE -->
+    <div class="premium-glass-panel p-6 md:p-8 mb-10 relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            
+            <!-- Left Side: Interactive Console Tabs (4 cols) -->
+            <div class="lg:col-span-4 flex flex-col justify-between gap-3 border-b lg:border-b-0 lg:border-r border-gray-150 pb-6 lg:pb-0 lg:pr-8 print:hidden">
+                <div class="space-y-4">
+                    <span class="block text-[8px] font-black text-emerald-800 tracking-widest uppercase mb-4">MÜHENDİSLİK ANALİZÖR KONSOLU</span>
+                    
+                    <button onclick="switchConsoleTab('symptoms')" id="console-tab-symptoms" class="console-tab-btn active w-full flex items-center justify-between p-4.5 rounded-2xl border border-white bg-white/40 hover:bg-white/70 text-left">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-700 flex items-center justify-center border border-emerald-500/20">
+                                <span class="mono-font text-xs font-black">01</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs font-extrabold text-gray-800">{% if data.season == 'Genel' %}Sistem Bulguları{% else %}Saha Teşhis Belirtileri{% endif %}</span>
+                                <span class="text-[9px] text-gray-400 font-semibold">Tesis/Yaprak Parametreleri</span>
+                            </div>
+                        </div>
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+
+                    <button onclick="switchConsoleTab('climate')" id="console-tab-climate" class="console-tab-btn w-full flex items-center justify-between p-4.5 rounded-2xl border border-white bg-white/40 hover:bg-white/70 text-left">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-700 flex items-center justify-center border border-amber-500/20">
+                                <span class="mono-font text-xs font-black">02</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs font-extrabold text-gray-800">{% if data.season == 'Genel' %}Çevresel Koşullar{% else %}Çevresel Risk Faktörleri{% endif %}</span>
+                                <span class="text-[9px] text-gray-400 font-semibold">Klimatik Tetikleyiciler</span>
+                            </div>
+                        </div>
+                        <svg class="w-4 h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+
+                    <button onclick="switchConsoleTab('case')" id="console-tab-case" class="console-tab-btn w-full flex items-center justify-between p-4.5 rounded-2xl border border-white bg-white/40 hover:bg-white/70 text-left">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-700 flex items-center justify-center border border-indigo-500/20">
+                                <span class="mono-font text-xs font-black">03</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs font-extrabold text-gray-800">Saha Vaka Günlüğü</span>
+                                <span class="text-[9px] text-gray-400 font-semibold">Uygulamalı Gerçek Vaka</span>
+                            </div>
+                        </div>
+                        <svg class="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-150/70 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span class="text-[8px] font-black text-gray-400 tracking-wider uppercase">DONANIM BAĞLANTISI: AKTİF</span>
+                </div>
+            </div>
+
+            <!-- Right Side: Display Monitor Screen (8 cols / Full width on print) -->
+            <div class="lg:col-span-8 bg-black/5 rounded-3xl p-6 md:p-8 border border-white/40 relative overflow-hidden flex flex-col justify-between min-h-[360px] print:border-none print:bg-transparent print:p-0 print:min-h-0">
+                
+                <!-- Laser line sweep effect -->
+                <div class="laser-scan-line print:hidden"></div>
+
+                <div class="relative z-10 w-full h-full flex flex-col justify-between">
+                    
+                    <!-- DISPLAY 1: SYMPTOMS -->
+                    <div id="console-screen-symptoms" class="console-screen space-y-4">
+                        <h4 class="text-xs font-black text-emerald-800 tracking-wider uppercase mb-2">>> TEŞHİS PARAMETRELERİ DETAYLI ANALİZİ</h4>
+                        <div class="space-y-3">
+                            {% for symptom in data.symptoms %}
+                            <div class="flex items-center gap-3 p-3 bg-white/40 border border-white/60 rounded-xl shadow-sm transition hover:bg-white/60 print:border-none print:p-1">
+                                <svg class="w-4 h-4 text-emerald-600 flex-shrink-0 print:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                <span class="text-xs font-bold text-gray-700">{{ symptom }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- DISPLAY 2: CLIMATE CONDITIONS -->
+                    <div id="console-screen-climate" class="console-screen hidden space-y-4 print:block print:mt-6">
+                        <h4 class="text-xs font-black text-amber-800 tracking-wider uppercase mb-2">>> İKLİMSEL STRES FAKTÖR KORİDORLARI</h4>
+                        <div class="p-6 bg-white/45 border border-white/70 rounded-2xl shadow-inner relative overflow-hidden print:border-none print:p-0">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center border border-amber-500/20 shadow-inner flex-shrink-0 print:hidden">
+                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                </div>
+                                <div>
+                                    <span class="block text-[8px] font-black text-amber-800 tracking-widest uppercase mb-1 print:hidden">KLİMATİK STRES PARAMETRELERİ</span>
+                                    <p class="text-xs font-extrabold text-gray-700 leading-relaxed">
+                                        {{ data.favorable_conditions }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Futuristic Micro Gauges for Climate Stress -->
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-150/70 print:hidden">
+                            <div>
+                                <span class="block text-[8px] font-black text-gray-400 uppercase">SICAKLIK EŞİĞİ</span>
+                                <div class="w-full bg-white/40 h-1.5 rounded-full mt-1.5 overflow-hidden">
+                                    <div class="bg-amber-500 h-full rounded-full" style="width: 70%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="block text-[8px] font-black text-gray-400 uppercase">NEM EŞİĞİ</span>
+                                <div class="w-full bg-white/40 h-1.5 rounded-full mt-1.5 overflow-hidden">
+                                    <div class="bg-cyan-500 h-full rounded-full" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="block text-[8px] font-black text-gray-400 uppercase">RÜZGAR / AKIŞ STRESİ</span>
+                                <div class="w-full bg-white/40 h-1.5 rounded-full mt-1.5 overflow-hidden">
+                                    <div class="bg-emerald-500 h-full rounded-full" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DISPLAY 3: CASE STUDY -->
+                    <div id="console-screen-case" class="console-screen hidden space-y-4 print:block print:mt-6">
+                        <h4 class="text-xs font-black text-indigo-800 tracking-wider uppercase mb-2">>> DEKRİPTE EDİLMİŞ VAKA BİLGİSİ</h4>
+                        <div class="p-6 bg-white/45 border border-white/70 rounded-2xl shadow-inner relative overflow-hidden min-h-[180px] max-h-[220px] overflow-y-auto print:border-none print:p-0 print:max-h-none print:min-h-0">
+                            <p class="drop-cap accent-font text-gray-800 font-semibold text-xs leading-relaxed text-justify">
+                                {{ data.case_scenario }}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION: CLIMATE SANDBOX SIMULATOR -->
+    <div class="premium-glass-panel p-8 mb-10 relative overflow-hidden text-left print:hidden">
+        <div class="absolute -top-16 -right-16 w-36 h-36 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
+        
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-150/70">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-inner">
+                <svg class="w-5.5 h-5.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+            </div>
+            <div>
+                <h3 class="text-lg font-black text-gray-955 tracking-tight">Klimatik Simülatör Sandbox (Gerçek Zamanlı Risk Analizi)</h3>
+                <p class="text-[10px] text-gray-400 font-semibold">Bulunduğunuz bölgedeki sıcaklık ve nem verilerini girerek anlık hastalık üreme/büyüme hızını simüle edin.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <!-- Slider 1: Temperature -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between text-xs font-black text-gray-700 uppercase tracking-wider">
+                    <span>Sıcaklık (°C)</span>
+                    <span id="temp-val" class="mono-font text-emerald-700 bg-white/70 px-2 py-0.5 rounded-lg border border-white/90">25°C</span>
+                </div>
+                <input type="range" id="temp-slider" min="5" max="45" value="25" oninput="runClimateSimulation()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none">
+                <div class="flex justify-between text-[8px] font-black text-gray-400">
+                    <span>5°C</span>
+                    <span>25°C (Optimal)</span>
+                    <span>45°C</span>
+                </div>
+            </div>
+
+            <!-- Slider 2: Humidity -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between text-xs font-black text-gray-700 uppercase tracking-wider">
+                    <span>Bağıl Nem (%)</span>
+                    <span id="humidity-val" class="mono-font text-emerald-700 bg-white/70 px-2 py-0.5 rounded-lg border border-white/90">60%</span>
+                </div>
+                <input type="range" id="humidity-slider" min="10" max="100" value="60" oninput="runClimateSimulation()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none">
+                <div class="flex justify-between text-[8px] font-black text-gray-400">
+                    <span>10%</span>
+                    <span>60% (Optimal)</span>
+                    <span>100%</span>
+                </div>
+            </div>
+
+            <!-- Simulation Result HUD -->
+            <div class="p-5 bg-white/45 rounded-3xl border border-white/70 shadow-inner flex flex-col justify-between h-full min-h-[110px] relative overflow-hidden">
+                <!-- Result Glowing Indicator -->
+                <div class="flex items-center justify-between gap-4 mb-2">
+                    <span class="text-[8px] font-black text-gray-400 tracking-widest uppercase">SİMÜLASYON ANALİZİ</span>
+                    <span id="sim-status-badge" class="px-2.5 py-0.5 text-[8px] font-black tracking-wider text-white rounded-full uppercase glow-badge-medium">Optimal Düzey</span>
+                </div>
+                
+                <div class="flex items-end justify-between gap-2 mt-2">
+                    <div>
+                        <span class="block text-[8px] font-black text-gray-400 uppercase">YAYILIM RİSK KATSAYISI</span>
+                        <span id="sim-factor" class="text-2xl font-mono font-black text-gray-800 tracking-tighter">1.00x</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="block text-[8px] font-black text-gray-400 uppercase">TEŞHİS MODELİ</span>
+                        <span class="text-[9px] font-black text-emerald-700 tracking-wider">VERDA SIM-V2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if data.pros or data.cons %}
+    <!-- SECTION: AVANTAJ VE RİSK ANALİZİ -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 text-left">
+        <!-- Avantajlar -->
+        {% if data.pros %}
+        <div class="premium-glass-card glow-border-emerald p-8 relative overflow-hidden">
+            <h3 class="text-lg font-black text-gray-955 tracking-tight flex items-center gap-2.5 mb-6">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-inner">
+                    <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                Sistemik Avantajlar
+            </h3>
+            <div class="space-y-4">
+                {% for pro in data.pros %}
+                <div class="p-4.5 bg-emerald-500/5 border border-emerald-500/10 rounded-2xl transition hover:bg-emerald-500/10">
+                    <h4 class="text-xs font-black text-emerald-950 leading-snug">{{ pro.title }}</h4>
+                    <p class="text-xs text-gray-650 mt-1 leading-relaxed">{{ pro.desc }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Risks -->
+        {% if data.cons %}
+        <div class="premium-glass-card glow-border-rose p-8 relative overflow-hidden">
+            <h3 class="text-lg font-black text-gray-955 tracking-tight flex items-center gap-2.5 mb-6">
+                <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100 shadow-inner">
+                    <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                Klimatik & Operasyonel Riskler
+            </h3>
+            <div class="space-y-4">
+                {% for con in data.cons %}
+                <div class="p-4.5 bg-rose-500/5 border border-rose-500/10 rounded-2xl transition hover:bg-rose-500/10">
+                    <h4 class="text-xs font-black text-rose-955 leading-snug">{{ con.title }}</h4>
+                    <p class="text-xs text-gray-655 mt-1 leading-relaxed">{{ con.desc }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Bottom Section: Organic Treatment Room (Laboratory Style) -->
+    <div class="premium-glass-panel p-8 md:p-12 relative overflow-hidden text-left mb-8">
+        <!-- Floating chemical compound background decorative SVG -->
+        <div class="absolute -bottom-12 -right-12 w-56 h-56 text-emerald-800/5 pointer-events-none">
+            <svg fill="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+            </svg>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-8 border-b border-gray-150 relative z-10">
+            <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shadow-inner flex-shrink-0">
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black text-gray-955 tracking-tight leading-tight">{% if data.season == 'Genel' %}Sürdürülebilir Yönetim & Sistem Reçetesi{% else %}Organik Koruma & Reçete Odası{% endif %}</h2>
+                    <p class="text-xs text-gray-500 font-semibold mt-1">{% if data.season == 'Genel' %}Sistemin sürdürülebilir yönetimi, besleme ve bakım protokolleri.{% else %}Kimyasal kalıntı barındırmayan, biyolojik ziraat laboratuvar formülasyonları.{% endif %}</p>
+                </div>
+            </div>
+
+            <!-- Recipe Meta badges -->
+            <div class="flex flex-wrap items-center gap-2 print:hidden">
+                <span class="px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[9px] font-black text-emerald-800 tracking-wider uppercase">KALINTI: %0 SIFIR</span>
+                <span class="px-3 py-1 rounded-lg bg-teal-500/10 border border-teal-500/20 text-[9px] font-black text-teal-800 tracking-wider uppercase">ETKİ: MAKSİMUM</span>
+                <span class="px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-[9px] font-black text-blue-800 tracking-wider uppercase">ÇEVRE: %100 DOSTU</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 items-stretch">
+            
+            <!-- Left Side: Solution Synthesis Mixer Station (3 Cols) -->
+            <div class="lg:col-span-3 flex flex-col items-center justify-between p-6 bg-white/35 border border-white/60 rounded-[32px] shadow-sm relative overflow-hidden min-h-[300px] print:hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-emerald-500/5 -z-10"></div>
+                <span class="block text-[8px] font-black text-emerald-800 tracking-widest uppercase mb-4 text-center">FİTOTERAPİ SENTEZLEME</span>
+                
+                <!-- Cylinder Glass Flask -->
+                <div class="relative w-28 h-40 border-4 border-white/70 rounded-b-[40px] rounded-t-[14px] overflow-hidden bg-black/10 shadow-inner">
+                    <!-- Liquid Level -->
+                    <div id="flask-liquid" class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-emerald-600 via-emerald-500 to-teal-400 transition-all duration-700 ease-in-out flask-liquid-wave" style="height: 50%;">
+                        <!-- Wave top effect -->
+                        <div class="absolute -top-1.5 left-0 right-0 h-3 bg-teal-300/50 rounded-full"></div>
+                        <!-- Bubbles container -->
+                        <div id="flask-bubbles" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+                    </div>
+                </div>
+                
+                <button type="button" onclick="synthesizeSolution()" id="synth-btn" class="mt-4 w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 active:scale-95 text-white text-[10px] font-black tracking-widest uppercase rounded-xl transition-all shadow-md shadow-emerald-500/25 flex items-center justify-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 animate-spin hidden" id="synth-loader" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    <span id="synth-btn-text">REÇETEYİ SENTEZLE</span>
+                </button>
+            </div>
+
+            <!-- Middle Side: Organic Recipe Timeline (5 Cols / Full width on print) -->
+            <div class="lg:col-span-5 flex flex-col justify-between space-y-6 print:lg:col-span-12">
+                
+                <div class="p-6 rounded-3xl bg-white/70 border border-white/95 shadow-md flex items-center justify-between gap-4 print:border-none print:p-0">
+                    <div>
+                        <span class="block text-[8px] font-black text-emerald-800 tracking-widest uppercase mb-1 print:hidden">AKTİF FİTOTERAPİ SOLÜSYONU</span>
+                        <h4 class="text-base font-extrabold text-gray-900 leading-tight">
+                            {{ data.organic_recipe_name }}
+                        </h4>
+                    </div>
+                    <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-500/20 print:hidden">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Immersive Visual Flow Timeline -->
+                <div class="relative flex flex-col md:flex-row items-stretch justify-between gap-6 py-6 px-5 bg-white/45 backdrop-blur-md rounded-[32px] border border-white/60 shadow-inner overflow-hidden flex-1 print:border-none print:p-0">
+                    <!-- Timeline connection vector line -->
+                    <div class="hidden md:block absolute top-[58px] left-[20%] right-[20%] h-0.5 border-t border-dashed border-emerald-500/40 -z-10 print:hidden"></div>
+                    
+                    <!-- Prep Box -->
+                    <div onclick="highlightStep(1, 40)" class="flex-1 flex flex-col items-center text-center p-6 bg-white/60 border border-white/80 rounded-[24px] shadow-sm hover:shadow-md hover:bg-white/85 transition-all duration-300 cursor-pointer step-card active border-emerald-500/30 bg-emerald-500/5 print:border-none print:p-0 print:text-left print:items-start" id="step-card-1">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-emerald-500 text-white flex items-center justify-center font-mono font-black text-sm shadow-lg shadow-teal-500/20 mb-4 animate-ring print:hidden">
+                            01
+                        </div>
+                        <span class="text-[9px] font-black text-teal-800 tracking-widest uppercase mb-2">Reçete Hazırlanışı</span>
+                        <p class="text-xs font-semibold text-gray-655 leading-relaxed max-w-sm">
+                            {{ data.organic_recipe_prep }}
+                        </p>
+                    </div>
+
+                    <!-- Application Box -->
+                    <div onclick="highlightStep(2, 85)" class="flex-1 flex flex-col items-center text-center p-6 bg-white/60 border border-white/80 rounded-[24px] shadow-sm hover:shadow-md hover:bg-white/85 transition-all duration-300 cursor-pointer step-card print:border-none print:p-0 print:text-left print:items-start print:mt-6" id="step-card-2">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-green-600 text-white flex items-center justify-center font-mono font-black text-sm shadow-lg shadow-emerald-500/20 mb-4 print:hidden">
+                            02
+                        </div>
+                        <span class="text-[9px] font-black text-emerald-800 tracking-widest uppercase mb-2">Sahada Uygulanışı</span>
+                        <p class="text-xs font-semibold text-gray-655 leading-relaxed max-w-sm">
+                            {{ data.organic_recipe_app }}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Side: Preventative Measures Checklist Matrix (4 Cols / Full width on print) -->
+            <div class="lg:col-span-4 print:lg:col-span-12 print:mt-6">
+                <div class="p-6 md:p-8 rounded-3xl bg-white/55 border border-white/85 shadow-sm h-full print:border-none print:p-0">
+                    <h3 class="text-xs font-black text-gray-800 tracking-wider flex items-center gap-2 mb-6 uppercase">
+                        <div class="w-6.5 h-6.5 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-100 print:hidden">
+                            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        Önleyici Tedbir Kalkanı
+                    </h3>
+
+                    <div class="space-y-4">
+                        {% for measure in data.preventative_measures %}
+                        <div class="shield-card p-4 flex items-start gap-3 print:border-none print:p-1">
+                            <div class="w-5.5 h-5.5 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0 mt-0.5 border border-emerald-500/15 print:hidden">
+                                <svg class="w-3.5 h-3.5 text-emerald-750" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <span class="text-xs font-extrabold text-gray-700 leading-relaxed">
+                                {{ measure }}
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Audio Feedback Web Audio API Synthesizer (Holographic offline sound synthesis)
+    let audioContext = null;
+    let audioEnabled = false;
+
+    function toggleAudio() {
+        audioEnabled = !audioEnabled;
+        const offIcon = document.getElementById('audio-off-icon');
+        const onIcon = document.getElementById('audio-on-icon');
+        const btn = document.getElementById('audio-toggle-btn');
+        
+        if (audioEnabled) {
+            offIcon.classList.add('hidden');
+            onIcon.classList.remove('hidden');
+            btn.classList.add('border-emerald-500/40', 'bg-emerald-500/10');
+            
+            // Initialize AudioContext
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            playAudioTone(523.25, 'sine', 0.12); // High C chime
+        } else {
+            onIcon.classList.add('hidden');
+            offIcon.classList.remove('hidden');
+            btn.classList.remove('border-emerald-500/40', 'bg-emerald-500/10');
+            playAudioTone(261.63, 'sine', 0.1); // Low C chime
+        }
+    }
+
+    function playAudioTone(frequency, type = 'sine', duration = 0.1, volume = 0.04) {
+        if (!audioEnabled || !audioContext) return;
+        
+        try {
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
+            const osc = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            osc.type = type;
+            osc.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            
+            gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            osc.start();
+            osc.stop(audioContext.currentTime + duration);
+        } catch (e) {
+            console.warn("Audio Context playback warning: ", e);
+        }
+    }
+
+    // Tab switching for Laboratory Analyzer Console
+    function switchConsoleTab(tabId) {
+        // Hide all screens
+        const screens = document.querySelectorAll('.console-screen');
+        screens.forEach(el => el.classList.add('hidden'));
+
+        // Show active screen
+        const activeScreen = document.getElementById('console-screen-' + tabId);
+        if (activeScreen) {
+            activeScreen.classList.remove('hidden');
+        }
+
+        // Reset tab highlights
+        const tabs = document.querySelectorAll('.console-tab-btn');
+        tabs.forEach(el => el.classList.remove('active'));
+
+        // Highlight selected tab
+        const activeTab = document.getElementById('console-tab-' + tabId);
+        if (activeTab) {
+            activeTab.classList.add('active');
+        }
+
+        // Restart laser line scanning animation
+        const laser = document.querySelector('.laser-scan-line');
+        if (laser) {
+            laser.style.animation = 'none';
+            laser.offsetHeight; /* trigger reflow */
+            laser.style.animation = 'laser-scan 3s infinite linear';
+        }
+
+        playAudioTone(380, 'sine', 0.07, 0.03); // audio tap feedback
+    }
+
+    // Step highlight and liquid level update
+    function highlightStep(stepNum, fillPercent) {
+        // Reset step card highlights
+        const cards = document.querySelectorAll('.step-card');
+        cards.forEach(el => {
+            el.classList.remove('border-emerald-500/30', 'bg-emerald-500/5');
+            el.querySelector('.w-12').classList.remove('animate-ring');
+        });
+
+        // Set active step card styles
+        const activeCard = document.getElementById('step-card-' + stepNum);
+        if (activeCard) {
+            activeCard.classList.add('border-emerald-500/30', 'bg-emerald-500/5');
+            activeCard.querySelector('.w-12').classList.add('animate-ring');
+        }
+
+        // Adjust flask liquid height
+        const liquid = document.getElementById('flask-liquid');
+        if (liquid) {
+            liquid.style.height = fillPercent + '%';
+        }
+
+        playAudioTone(440, 'triangle', 0.06, 0.02); // step click tone
+    }
+
+    // Synthesize active solution (bubbles particles creation & bubble pop sound synthesis)
+    let isSynthesizing = false;
+    function synthesizeSolution() {
+        if (isSynthesizing) return;
+        isSynthesizing = true;
+
+        const synthBtn = document.getElementById('synth-btn');
+        const synthText = document.getElementById('synth-btn-text');
+        const loader = document.getElementById('synth-loader');
+        const liquid = document.getElementById('flask-liquid');
+        const bubblesContainer = document.getElementById('flask-bubbles');
+
+        if (synthBtn && loader && synthText && liquid && bubblesContainer) {
+            // Update button UI
+            loader.classList.remove('hidden');
+            synthText.innerText = "SENTEZLENİYOR...";
+            synthBtn.classList.add('from-emerald-500', 'to-teal-500', 'animate-pulse');
+
+            // Increase liquid height during synthesis
+            liquid.style.height = "90%";
+
+            // Clear previous bubbles
+            bubblesContainer.innerHTML = '';
+
+            // Play starting synthesis swoosh chime
+            playAudioTone(150, 'sawtooth', 0.4, 0.02);
+            setTimeout(() => playAudioTone(300, 'sawtooth', 0.4, 0.02), 150);
+
+            // Generate rising bubble divs with random delays/offsets
+            const bubbleCount = 18;
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'synth-bubble';
+                
+                // Random properties
+                const size = Math.random() * 8 + 4; // 4px to 12px
+                const left = Math.random() * 85 + 5; // 5% to 90%
+                const delay = Math.random() * 1.8; // 0s to 1.8s
+                const duration = Math.random() * 1.2 + 1.2; // 1.2s to 2.4s
+
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = left + '%';
+                bubble.style.animationDelay = delay + 's';
+                bubble.style.animationDuration = duration + 's';
+
+                bubblesContainer.appendChild(bubble);
+
+                // Schedule bubble pop sounds synced with delays
+                if (audioEnabled) {
+                    setTimeout(() => {
+                        // Synthesize a high-pitched rapid pop
+                        const popFreq = Math.random() * 700 + 500;
+                        playAudioTone(popFreq, 'triangle', 0.04, 0.025);
+                    }, delay * 1000);
+                }
+            }
+
+            // Finish synthesis after 2.5 seconds
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                synthText.innerText = "SENTEZLENDİ!";
+                synthBtn.classList.remove('animate-pulse');
+                synthBtn.classList.replace('from-emerald-600', 'from-teal-600');
+                
+                // Success Audio Chime
+                playAudioTone(523.25, 'sine', 0.15, 0.05); // C5
+                setTimeout(() => playAudioTone(659.25, 'sine', 0.15, 0.04), 100); // E5
+                setTimeout(() => playAudioTone(783.99, 'sine', 0.25, 0.04), 200); // G5
+                
+                // Slowly return to current active step level height
+                setTimeout(() => {
+                    const activeCard = document.querySelector('.step-card.border-emerald-500\\/30');
+                    if (activeCard && activeCard.id === 'step-card-2') {
+                        liquid.style.height = "85%";
+                    } else {
+                        liquid.style.height = "50%";
+                    }
+                    synthText.innerText = "REÇETEYİ SENTEZLE";
+                    synthBtn.classList.replace('from-teal-600', 'from-emerald-600');
+                    isSynthesizing = false;
+                }, 1200);
+
+            }, 2500);
+        }
+    }
+
+    // Climate Simulator Sandbox Logic
+    function runClimateSimulation() {
+        const temp = parseInt(document.getElementById('temp-slider').value);
+        const humidity = parseInt(document.getElementById('humidity-slider').value);
+        
+        // Update HUD text values
+        document.getElementById('temp-val').innerText = temp + '°C';
+        document.getElementById('humidity-val').innerText = humidity + '%';
+        
+        // Risk factor calculation: warm temp (22-32) + high humidity (>70) increases spread multiplier
+        let riskFactor = 1.0;
+        if (temp >= 20 && temp <= 35) {
+            riskFactor += (temp - 20) * 0.06; // peak risk at 28C
+            if (temp > 28) {
+                riskFactor = 1.48 - (temp - 28) * 0.06;
+            }
+        } else if (temp < 20) {
+            riskFactor *= (temp / 20.0);
+        } else {
+            riskFactor *= ((45 - temp) / 10.0);
+        }
+        if (riskFactor < 0.1) riskFactor = 0.1;
+        
+        // Humidity modifier
+        const humFactor = humidity / 60.0;
+        let finalFactor = riskFactor * humFactor;
+        if (finalFactor < 0.15) finalFactor = 0.15;
+        
+        // Update UI Factor Value
+        document.getElementById('sim-factor').innerText = finalFactor.toFixed(2) + 'x';
+        
+        // Update HUD Badges and play feedback warning sounds
+        const badge = document.getElementById('sim-status-badge');
+        if (finalFactor >= 1.6) {
+            badge.innerText = "Kritik Salgın Riski";
+            badge.className = "px-2.5 py-0.5 text-[8px] font-black tracking-wider text-white rounded-full uppercase glow-badge-critical";
+            // play double alarm pulse chime
+            playAudioTone(880, 'sine', 0.06, 0.015);
+            setTimeout(() => playAudioTone(880, 'sine', 0.06, 0.015), 100);
+        } else if (finalFactor >= 1.2) {
+            badge.innerText = "Yüksek Yayılım Hızı";
+            badge.className = "px-2.5 py-0.5 text-[8px] font-black tracking-wider text-white rounded-full uppercase glow-badge-high";
+            playAudioTone(587.33, 'sine', 0.05, 0.015); // D5 warning chime
+        } else if (finalFactor >= 0.7) {
+            badge.innerText = "Normal Gelişim";
+            badge.className = "px-2.5 py-0.5 text-[8px] font-black tracking-wider text-white rounded-full uppercase glow-badge-medium";
+        } else {
+            badge.innerText = "Baskılanmış Hız";
+            badge.className = "px-2.5 py-0.5 text-[8px] font-black tracking-wider text-white rounded-full uppercase glow-badge-low";
+        }
+    }
+
+    // 3D Parallax Tilt effect on the Risk Dial & Spotlights
+    document.addEventListener('DOMContentLoaded', function() {
+        const dial = document.querySelector('.tilt-3d');
+        if (dial) {
+            dial.addEventListener('mousemove', e => {
+                const rect = dial.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const rotateX = -((y / rect.height) - 0.5) * 15; // max 15 degrees
+                const rotateY = ((x / rect.width) - 0.5) * 15;
+                
+                dial.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+            
+            dial.addEventListener('mouseleave', () => {
+                dial.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+            });
+        }
+
+        // Add spot light overlays to advantage/risk cards
+        const cards = document.querySelectorAll('.premium-glass-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+            
+            // Add custom mouseenter beep
+            card.addEventListener('mouseenter', () => {
+                playAudioTone(600, 'sine', 0.02, 0.015);
+            });
+        });
+    });
+</script>
+{% endblock %}

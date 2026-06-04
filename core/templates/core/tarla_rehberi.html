@@ -1,0 +1,927 @@
+{% extends 'base.html' %}
+
+{% block title %}Genel Tarla Rehberi | Verda{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts - Plus Jakarta Sans & Playfair Display for Elite Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+<style>
+    .premium-font {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .accent-font {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Premium border-free glass panel design */
+    .nature-glass-panel {
+        background: rgba(255, 255, 255, 0.35);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 40px;
+        box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.04);
+    }
+    
+    /* Bento Grid styling */
+    .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 24px;
+        transition: all 0.5s ease;
+    }
+    @media (min-width: 768px) {
+        .bento-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-auto-flow: row dense;
+        }
+    }
+
+    /* Vibrant Bento Glass Cards */
+    .premium-bento-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.42);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 32px;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1;
+        overflow: hidden;
+    }
+    
+    /* Cursor Spotlight Effect */
+    .premium-bento-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+        background: radial-gradient(
+            350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+            var(--spotlight-color, rgba(16, 185, 129, 0.09)),
+            transparent 80%
+        );
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    .premium-bento-card:hover::before {
+        opacity: 1;
+    }
+
+    .premium-bento-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        border-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 
+            0 30px 60px -15px rgba(0, 0, 0, 0.06),
+            0 0 0 1px rgba(255, 255, 255, 0.85);
+    }
+
+    /* Risk-based card coloring and glowing effects using layered gradient borders */
+    .bento-risk-critical {
+        --spotlight-color: rgba(244, 63, 94, 0.12);
+        border: 1.5px solid transparent !important;
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        background-image: 
+            linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), 
+            linear-gradient(135deg, rgba(244, 63, 94, 0.6) 0%, rgba(249, 115, 22, 0.4) 100%);
+    }
+    .bento-risk-critical:hover {
+        box-shadow: 
+            0 30px 65px -12px rgba(244, 63, 94, 0.18),
+            0 0 25px rgba(244, 63, 94, 0.04) !important;
+    }
+    
+    .bento-risk-high {
+        --spotlight-color: rgba(249, 115, 22, 0.12);
+        border: 1.5px solid transparent !important;
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        background-image: 
+            linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), 
+            linear-gradient(135deg, rgba(249, 115, 22, 0.6) 0%, rgba(234, 179, 8, 0.4) 100%);
+    }
+    .bento-risk-high:hover {
+        box-shadow: 
+            0 30px 65px -12px rgba(249, 115, 22, 0.18),
+            0 0 25px rgba(249, 115, 22, 0.04) !important;
+    }
+    
+    .bento-risk-medium {
+        --spotlight-color: rgba(16, 185, 129, 0.1);
+        border: 1.5px solid transparent !important;
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        background-image: 
+            linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), 
+            linear-gradient(135deg, rgba(16, 185, 129, 0.5) 0%, rgba(20, 184, 166, 0.3) 100%);
+    }
+    .bento-risk-medium:hover {
+        box-shadow: 
+            0 30px 65px -12px rgba(16, 185, 129, 0.15),
+            0 0 25px rgba(16, 185, 129, 0.03) !important;
+    }
+    
+    .bento-risk-low {
+        --spotlight-color: rgba(6, 182, 212, 0.1);
+        border: 1.5px solid transparent !important;
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        background-image: 
+            linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.3)), 
+            linear-gradient(135deg, rgba(6, 182, 212, 0.5) 0%, rgba(99, 102, 241, 0.3) 100%);
+    }
+    .bento-risk-low:hover {
+        box-shadow: 
+            0 30px 65px -12px rgba(6, 182, 212, 0.15),
+            0 0 25px rgba(6, 182, 212, 0.03) !important;
+    }
+
+    /* Glow badges for risk levels */
+    .glow-badge-critical {
+        background: linear-gradient(135deg, #f43f5e 0%, #ef4444 100%);
+        box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+    }
+    .glow-badge-high {
+        background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    }
+    .glow-badge-medium {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .glow-badge-low {
+        background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+    }
+
+    /* Hologram Cards Grid & Expandable Layout */
+    .hologram-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.42);
+        backdrop-filter: blur(28px);
+        -webkit-backdrop-filter: blur(28px);
+        border: 1.5px solid rgba(255, 255, 255, 0.65);
+        border-radius: 32px;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease, background-color 0.5s ease;
+        z-index: 1;
+        overflow: hidden;
+    }
+    
+    .hologram-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.22) 50%, transparent 60%);
+        background-size: 200% 100%;
+        background-position: -100% 0;
+        transition: background-position 0.8s ease;
+        z-index: 5;
+        pointer-events: none;
+    }
+    .hologram-card:hover::after {
+        background-position: 100% 0;
+    }
+
+    .hologram-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        background: rgba(255, 255, 255, 0.65);
+        border-color: rgba(255, 255, 255, 0.95);
+    }
+    
+    /* Neon Glow shadow based on index or category */
+    .hologram-glow-1:hover {
+        box-shadow: 0 35px 70px -15px rgba(245, 158, 11, 0.22), 0 0 20px rgba(245, 158, 11, 0.05);
+    }
+    .hologram-glow-2:hover {
+        box-shadow: 0 35px 70px -15px rgba(16, 185, 129, 0.22), 0 0 20px rgba(16, 185, 129, 0.05);
+    }
+    .hologram-glow-3:hover {
+        box-shadow: 0 35px 70px -15px rgba(6, 182, 212, 0.22), 0 0 20px rgba(6, 182, 212, 0.05);
+    }
+
+    /* Grid Row Transition - Smooth height reveal without max-height jumps */
+    .expandable-wrapper {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hologram-card:hover .expandable-wrapper {
+        grid-template-rows: 1fr;
+    }
+    .expandable-content {
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(15px);
+        transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hologram-card:hover .expandable-content {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Ambient Dynamic Background Mesh -->
+<div id="ambient-bg" class="absolute top-0 left-0 right-0 h-[1200px] overflow-hidden -z-10 pointer-events-none transition-all duration-1000 ease-in-out">
+    <div id="orb-1" class="absolute -top-24 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-20 bg-emerald-400 transition-all duration-1000 ease-in-out"></div>
+    <div id="orb-2" class="absolute top-36 right-1/4 w-[500px] h-[500px] rounded-full blur-[130px] opacity-15 bg-teal-300 transition-all duration-1000 ease-in-out"></div>
+</div>
+
+<div class="max-w-6xl mx-auto px-4 py-16 premium-font">
+
+    <!-- Header Section -->
+    <div class="text-center mb-16 relative">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 text-[10px] font-black tracking-widest uppercase mb-4 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-emerald-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            BİLİMSEL ZİRAAT AKADEMİSİ
+        </span>
+        <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight">Genel Tarla & Üretim<br><span class="accent-font italic bg-gradient-to-r from-emerald-600 via-emerald-500 to-green-600 bg-clip-text text-transparent">Rehberi ve Analiz Portalı</span></h1>
+        <p class="mt-4 text-gray-500 font-semibold text-sm max-w-xl mx-auto leading-relaxed">Dönemsel tarla problemlerini önceden öngörün, farklı üretim sistemlerinin avantaj ve dezavantajlarını bilimsel verilerle kıyaslayın.</p>
+        {% if user.is_staff %}
+        <div class="mt-6">
+            <a href="{% url 'add_guide_item' %}" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black tracking-widest uppercase transition-all duration-300 shadow-md shadow-emerald-600/10">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                </svg>
+                Yeni Rehber İçeriği Ekle
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- SECTION 1: DÖNEMSEL TARLA PROBLEMLERİ (TABS) -->
+    <div class="nature-glass-panel p-6 md:p-10 mb-16 relative overflow-hidden">
+        <div class="absolute -top-12 -left-12 w-48 h-48 bg-emerald-300 opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <!-- Live Search & Tag Filter Terminal Console -->
+        <div class="relative flex flex-col md:flex-row gap-4 items-center justify-between p-4 bg-white/20 backdrop-blur-md rounded-3xl border border-white/40 shadow-inner mb-6 z-20">
+            <!-- Search Input -->
+            <div class="relative w-full md:max-w-md">
+                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <svg class="h-4 w-4 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </span>
+                <input type="text" id="live-search" oninput="filterBentoCards()" placeholder="Rehberde arama yapın (ör. Külleme, Topraksız, Domates)..." class="w-full pl-10 pr-4 py-2.5 bg-white/50 backdrop-blur-sm border border-white/60 rounded-2xl text-xs font-bold text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 shadow-inner transition-all">
+            </div>
+            
+            <!-- Filter Tags Row -->
+            <div class="flex flex-wrap items-center gap-1.5 w-full md:w-auto overflow-x-auto justify-end">
+                <button onclick="toggleTagFilter('all')" id="tag-filter-all" class="tag-filter-btn px-3 py-1.5 rounded-xl border border-emerald-600 bg-emerald-600 text-[9px] font-black tracking-wider uppercase text-white shadow-sm transition">TÜMÜ</button>
+                <button onclick="toggleTagFilter('Çok Yüksek')" class="tag-filter-btn px-3 py-1.5 rounded-xl border border-white/70 bg-white/60 text-[9px] font-black tracking-wider uppercase text-rose-700 shadow-sm transition">KRİTİK</button>
+                <button onclick="toggleTagFilter('Yüksek')" class="tag-filter-btn px-3 py-1.5 rounded-xl border border-white/70 bg-white/60 text-[9px] font-black tracking-wider uppercase text-orange-600 shadow-sm transition">YÜKSEK RİSK</button>
+                <button onclick="toggleTagFilter('Hastalık')" class="tag-filter-btn px-3 py-1.5 rounded-xl border border-white/70 bg-white/60 text-[9px] font-black tracking-wider uppercase text-emerald-700 shadow-sm transition">HASTALIKLAR</button>
+                <button onclick="toggleTagFilter('Zararlı')" class="tag-filter-btn px-3 py-1.5 rounded-xl border border-white/70 bg-white/60 text-[9px] font-black tracking-wider uppercase text-teal-700 shadow-sm transition">ZARARLILAR</button>
+                
+                <!-- Audio Toggle Button (Premium 2026 feature) -->
+                <button onclick="toggleAudio()" id="audio-toggle-btn" class="p-2.5 rounded-xl border border-white/70 bg-white/60 text-gray-500 hover:text-emerald-700 active:scale-95 shadow-sm transition flex items-center justify-center" title="Ses Arayüzünü Aç/Kapat">
+                    <!-- Speaker Off SVG -->
+                    <svg id="audio-off-icon" class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
+                    <!-- Speaker On SVG (Hidden by default) -->
+                    <svg id="audio-on-icon" class="w-4.5 h-4.5 hidden text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 pb-6 border-b border-gray-150 gap-4">
+            <div>
+                <h2 class="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    Dönemsel Tarla Problemleri
+                </h2>
+                <p class="text-xs text-gray-500 font-semibold mt-1">Dört mevsim boyunca karşılaşabileceğiniz bitki hastalıkları ve alınması gereken önlemler.</p>
+            </div>
+            
+            <!-- Season Switcher Tabs -->
+            <div class="relative flex bg-white/30 backdrop-blur-xl p-1.5 rounded-[22px] border border-white/50 self-stretch md:self-auto gap-1 shadow-inner overflow-hidden">
+                <!-- Sliding backdrop indicator -->
+                <div id="tab-indicator" class="absolute top-1.5 bottom-1.5 left-1.5 rounded-[16px] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] z-0 shadow-md"></div>
+                
+                <button onclick="switchSeason('ilkbahar')" id="tab-ilkbahar" class="season-tab-btn relative z-10 px-5 py-3 rounded-[16px] text-xs font-black tracking-wider uppercase transition-colors duration-300 flex items-center gap-2 flex-shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 19V6m0 0a5 5 0 015 5c0 3-5 5-5 5m0-10a5 5 0 00-5 5c0 3 5 5 5 5"></path></svg>
+                    İlkbahar
+                </button>
+                <button onclick="switchSeason('yaz')" id="tab-yaz" class="season-tab-btn relative z-10 px-5 py-3 rounded-[16px] text-xs font-black tracking-wider uppercase transition-colors duration-300 flex items-center gap-2 flex-shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                    Yaz
+                </button>
+                <button onclick="switchSeason('sonbahar')" id="tab-sonbahar" class="season-tab-btn relative z-10 px-5 py-3 rounded-[16px] text-xs font-black tracking-wider uppercase transition-colors duration-300 flex items-center gap-2 flex-shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 8h12M3 16h15"></path></svg>
+                    Sonbahar
+                </button>
+                <button onclick="switchSeason('kis')" id="tab-kis" class="season-tab-btn relative z-10 px-5 py-3 rounded-[16px] text-xs font-black tracking-wider uppercase transition-colors duration-300 flex items-center gap-2 flex-shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3m14.364-6.364L6.636 17.364m0-10.728l10.728 10.728"></path></svg>
+                    Kış
+                </button>
+            </div>
+        </div>
+
+        <!-- SEASONAL CONTENTS (Bento Grid Layout) -->
+        <div id="seasons-container">
+            
+            <!-- İLKBAHAR -->
+            <div id="content-ilkbahar" class="season-content space-y-6">
+                <div class="bento-grid">
+                    {% for item in ilkbahar_items %}
+                    <div class="premium-bento-card p-8 flex flex-col justify-between {% if item.risk_level == 'Çok Yüksek' %}bento-risk-critical{% elif item.risk_level == 'Yüksek' %}bento-risk-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bento-risk-low{% else %}bento-risk-medium{% endif %} {% if forloop.first or item.risk_level == 'Çok Yüksek' %}md:col-span-2 md:row-span-1{% else %}md:col-span-1 md:row-span-1{% endif %}">
+                        
+                        <div class="flex flex-col h-full">
+                            <div class="flex items-center justify-between gap-2 mb-4">
+                                <span class="px-3 py-1 text-[9px] font-black tracking-wider text-emerald-800 bg-white/70 border border-white/80 rounded-lg uppercase shadow-sm">{{ item.category }}</span>
+                                <span class="px-3 py-1 text-[8px] font-black tracking-wider text-white rounded-full uppercase {% if item.risk_level == 'Çok Yüksek' %}glow-badge-critical{% elif item.risk_level == 'Yüksek' %}glow-badge-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}glow-badge-low{% else %}glow-badge-medium{% endif %}">{{ item.risk_level }}</span>
+                            </div>
+                            
+                            <!-- Grid inner layout for larger Bento card -->
+                            <div class="{% if forloop.first or item.risk_level == 'Çok Yüksek' %}grid grid-cols-1 md:grid-cols-5 gap-6 items-start{% endif %}">
+                                <div class="{% if forloop.first or item.risk_level == 'Çok Yüksek' %}md:col-span-3{% endif %}">
+                                    <h3 class="font-extrabold text-gray-900 text-xl tracking-tight mb-3">{{ item.title }}</h3>
+                                    {% if item.scientific_name %}
+                                    <p class="accent-font italic text-xs text-emerald-700 font-bold mb-3">{{ item.scientific_name }}</p>
+                                    {% endif %}
+                                    <p class="text-xs text-gray-655 leading-relaxed">{{ item.description }}</p>
+                                </div>
+                                
+                                {% if forloop.first or item.risk_level == 'Çok Yüksek' %}
+                                <div class="md:col-span-2 bg-white/45 border border-white/60 p-4 rounded-2xl shadow-inner">
+                                    <span class="block text-[8px] font-black text-emerald-800 tracking-wider uppercase mb-2">Hızlı Reçete Önizlemesi</span>
+                                    <p class="text-[11px] font-semibold text-gray-655 leading-relaxed">
+                                        {% if item.recipe_preview %}{{ item.recipe_preview }}{% else %}{{ item.description|truncatewords:15 }}{% endif %}
+                                    </p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-4 border-t border-white/40 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full {% if item.risk_level == 'Çok Yüksek' %}bg-rose-500 animate-pulse{% elif item.risk_level == 'Yüksek' %}bg-amber-500{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bg-sky-500{% else %}bg-emerald-500{% endif %}"></span>
+                                <span class="text-[9px] font-black text-gray-400 tracking-wider uppercase">Ziraat Analizi</span>
+                            </div>
+                            <a href="{% url 'tarla_rehberi_detay' item.slug %}" class="text-[10px] font-black text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group transition">
+                                Detaylı Rapor
+                                <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                            </a>
+                        </div>
+                        
+                    </div>
+                    {% empty %}
+                    <div class="col-span-3 text-center py-12">
+                        <p class="text-gray-500 font-semibold text-sm">Bu mevsim için henüz tanımlanmış bir tarla problemi bulunmuyor.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- YAZ -->
+            <div id="content-yaz" class="season-content hidden space-y-6">
+                <div class="bento-grid">
+                    {% for item in yaz_items %}
+                    <div class="premium-bento-card p-8 flex flex-col justify-between {% if item.risk_level == 'Çok Yüksek' %}bento-risk-critical{% elif item.risk_level == 'Yüksek' %}bento-risk-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bento-risk-low{% else %}bento-risk-medium{% endif %} {% if forloop.first or item.risk_level == 'Çok Yüksek' %}md:col-span-2 md:row-span-1{% else %}md:col-span-1 md:row-span-1{% endif %}">
+                        
+                        <div class="flex flex-col h-full">
+                            <div class="flex items-center justify-between gap-2 mb-4">
+                                <span class="px-3 py-1 text-[9px] font-black tracking-wider text-emerald-800 bg-white/70 border border-white/80 rounded-lg uppercase shadow-sm">{{ item.category }}</span>
+                                <span class="px-3 py-1 text-[8px] font-black tracking-wider text-white rounded-full uppercase {% if item.risk_level == 'Çok Yüksek' %}glow-badge-critical{% elif item.risk_level == 'Yüksek' %}glow-badge-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}glow-badge-low{% else %}glow-badge-medium{% endif %}">{{ item.risk_level }}</span>
+                            </div>
+                            
+                            <div class="{% if forloop.first or item.risk_level == 'Çok Yüksek' %}grid grid-cols-1 md:grid-cols-5 gap-6 items-start{% endif %}">
+                                <div class="{% if forloop.first or item.risk_level == 'Çok Yüksek' %}md:col-span-3{% endif %}">
+                                    <h3 class="font-extrabold text-gray-900 text-xl tracking-tight mb-3">{{ item.title }}</h3>
+                                    {% if item.scientific_name %}
+                                    <p class="accent-font italic text-xs text-emerald-700 font-bold mb-3">{{ item.scientific_name }}</p>
+                                    {% endif %}
+                                    <p class="text-xs text-gray-655 leading-relaxed">{{ item.description }}</p>
+                                </div>
+                                
+                                {% if forloop.first or item.risk_level == 'Çok Yüksek' %}
+                                <div class="md:col-span-2 bg-white/45 border border-white/60 p-4 rounded-2xl shadow-inner">
+                                    <span class="block text-[8px] font-black text-emerald-800 tracking-wider uppercase mb-2">Hızlı Reçete Önizlemesi</span>
+                                    <p class="text-[11px] font-semibold text-gray-655 leading-relaxed">
+                                        {% if item.recipe_preview %}{{ item.recipe_preview }}{% else %}{{ item.description|truncatewords:15 }}{% endif %}
+                                    </p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-4 border-t border-white/40 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full {% if item.risk_level == 'Çok Yüksek' %}bg-rose-500 animate-pulse{% elif item.risk_level == 'Yüksek' %}bg-amber-500{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bg-sky-500{% else %}bg-emerald-500{% endif %}"></span>
+                                <span class="text-[9px] font-black text-gray-400 tracking-wider uppercase">Ziraat Analizi</span>
+                            </div>
+                            <a href="{% url 'tarla_rehberi_detay' item.slug %}" class="text-[10px] font-black text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group transition">
+                                Detaylı Rapor
+                                <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                            </a>
+                        </div>
+                        
+                    </div>
+                    {% empty %}
+                    <div class="col-span-3 text-center py-12">
+                        <p class="text-gray-500 font-semibold text-sm">Bu mevsim için henüz tanımlanmış bir tarla problemi bulunmuyor.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- SONBAHAR -->
+            <div id="content-sonbahar" class="season-content hidden space-y-6">
+                <div class="bento-grid">
+                    {% for item in sonbahar_items %}
+                    <div class="premium-bento-card p-8 flex flex-col justify-between {% if item.risk_level == 'Çok Yüksek' %}bento-risk-critical{% elif item.risk_level == 'Yüksek' %}bento-risk-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bento-risk-low{% else %}bento-risk-medium{% endif %} {% if forloop.first or item.risk_level == 'Çok Yüksek' %}md:col-span-2 md:row-span-1{% else %}md:col-span-1 md:row-span-1{% endif %}">
+                        
+                        <div class="flex flex-col h-full">
+                            <div class="flex items-center justify-between gap-2 mb-4">
+                                <span class="px-3 py-1 text-[9px] font-black tracking-wider text-emerald-800 bg-white/70 border border-white/80 rounded-lg uppercase shadow-sm">{{ item.category }}</span>
+                                <span class="px-3 py-1 text-[8px] font-black tracking-wider text-white rounded-full uppercase {% if item.risk_level == 'Çok Yüksek' %}glow-badge-critical{% elif item.risk_level == 'Yüksek' %}glow-badge-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}glow-badge-low{% else %}glow-badge-medium{% endif %}">{{ item.risk_level }}</span>
+                            </div>
+                            
+                            <div class="{% if forloop.first or item.risk_level == 'Çok Yüksek' %}grid grid-cols-1 md:grid-cols-5 gap-6 items-start{% endif %}">
+                                <div class="{% if forloop.first or item.risk_level == 'Çok Yüksek' %}md:col-span-3{% endif %}">
+                                    <h3 class="font-extrabold text-gray-900 text-xl tracking-tight mb-3">{{ item.title }}</h3>
+                                    {% if item.scientific_name %}
+                                    <p class="accent-font italic text-xs text-emerald-700 font-bold mb-3">{{ item.scientific_name }}</p>
+                                    {% endif %}
+                                    <p class="text-xs text-gray-655 leading-relaxed">{{ item.description }}</p>
+                                </div>
+                                
+                                {% if forloop.first or item.risk_level == 'Çok Yüksek' %}
+                                <div class="md:col-span-2 bg-white/45 border border-white/60 p-4 rounded-2xl shadow-inner">
+                                    <span class="block text-[8px] font-black text-emerald-800 tracking-wider uppercase mb-2">Hızlı Reçete Önizlemesi</span>
+                                    <p class="text-[11px] font-semibold text-gray-655 leading-relaxed">
+                                        {% if item.recipe_preview %}{{ item.recipe_preview }}{% else %}{{ item.description|truncatewords:15 }}{% endif %}
+                                    </p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-4 border-t border-white/40 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full {% if item.risk_level == 'Çok Yüksek' %}bg-rose-500 animate-pulse{% elif item.risk_level == 'Yüksek' %}bg-amber-500{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bg-sky-500{% else %}bg-emerald-500{% endif %}"></span>
+                                <span class="text-[9px] font-black text-gray-400 tracking-wider uppercase">Ziraat Analizi</span>
+                            </div>
+                            <a href="{% url 'tarla_rehberi_detay' item.slug %}" class="text-[10px] font-black text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group transition">
+                                Detaylı Rapor
+                                <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                            </a>
+                        </div>
+                        
+                    </div>
+                    {% empty %}
+                    <div class="col-span-3 text-center py-12">
+                        <p class="text-gray-500 font-semibold text-sm">Bu mevsim için henüz tanımlanmış bir tarla problemi bulunmuyor.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- KIŞ -->
+            <div id="content-kis" class="season-content hidden space-y-6">
+                <div class="bento-grid">
+                    {% for item in kis_items %}
+                    <div class="premium-bento-card p-8 flex flex-col justify-between {% if item.risk_level == 'Çok Yüksek' %}bento-risk-critical{% elif item.risk_level == 'Yüksek' %}bento-risk-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bento-risk-low{% else %}bento-risk-medium{% endif %} {% if forloop.first or item.risk_level == 'Çok Yüksek' %}md:col-span-2 md:row-span-1{% else %}md:col-span-1 md:row-span-1{% endif %}">
+                        
+                        <div class="flex flex-col h-full">
+                            <div class="flex items-center justify-between gap-2 mb-4">
+                                <span class="px-3 py-1 text-[9px] font-black tracking-wider text-emerald-800 bg-white/70 border border-white/80 rounded-lg uppercase shadow-sm">{{ item.category }}</span>
+                                <span class="px-3 py-1 text-[8px] font-black tracking-wider text-white rounded-full uppercase {% if item.risk_level == 'Çok Yüksek' %}glow-badge-critical{% elif item.risk_level == 'Yüksek' %}glow-badge-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}glow-badge-low{% else %}glow-badge-medium{% endif %}">{{ item.risk_level }}</span>
+                            </div>
+                            
+                            <div class="{% if forloop.first or item.risk_level == 'Çok Yüksek' %}grid grid-cols-1 md:grid-cols-5 gap-6 items-start{% endif %}">
+                                <div class="{% if forloop.first or item.risk_level == 'Çok Yüksek' %}md:col-span-3{% endif %}">
+                                    <h3 class="font-extrabold text-gray-900 text-xl tracking-tight mb-3">{{ item.title }}</h3>
+                                    {% if item.scientific_name %}
+                                    <p class="accent-font italic text-xs text-emerald-700 font-bold mb-3">{{ item.scientific_name }}</p>
+                                    {% endif %}
+                                    <p class="text-xs text-gray-655 leading-relaxed">{{ item.description }}</p>
+                                </div>
+                                
+                                {% if forloop.first or item.risk_level == 'Çok Yüksek' %}
+                                <div class="md:col-span-2 bg-white/45 border border-white/60 p-4 rounded-2xl shadow-inner">
+                                    <span class="block text-[8px] font-black text-emerald-800 tracking-wider uppercase mb-2">Hızlı Reçete Önizlemesi</span>
+                                    <p class="text-[11px] font-semibold text-gray-655 leading-relaxed">
+                                        {% if item.recipe_preview %}{{ item.recipe_preview }}{% else %}{{ item.description|truncatewords:15 }}{% endif %}
+                                    </p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-4 border-t border-white/40 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full {% if item.risk_level == 'Çok Yüksek' %}bg-rose-500 animate-pulse{% elif item.risk_level == 'Yüksek' %}bg-amber-500{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bg-sky-500{% else %}bg-emerald-500{% endif %}"></span>
+                                <span class="text-[9px] font-black text-gray-400 tracking-wider uppercase">Ziraat Analizi</span>
+                            </div>
+                            <a href="{% url 'tarla_rehberi_detay' item.slug %}" class="text-[10px] font-black text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group transition">
+                                Detaylı Rapor
+                                <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                            </a>
+                        </div>
+                        
+                    </div>
+                    {% empty %}
+                    <div class="col-span-3 text-center py-12">
+                        <p class="text-gray-500 font-semibold text-sm">Bu mevsim için henüz tanımlanmış bir tarla problemi bulunmuyor.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SECTION 2: FARKLI ÜRETİM ALANLARININ AVANTAJ / DEZAVANTAJLARI (HOLOGRAM CARD DECK) -->
+    <div class="mb-16">
+        <div class="mb-10 text-center md:text-left">
+            <h2 class="text-2xl font-black text-gray-900 tracking-tight flex items-center justify-center md:justify-start gap-2">
+                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                Üretim Alanlarının Karşılaştırmalı Analizi
+            </h2>
+            <p class="text-xs text-gray-500 font-semibold mt-1">Açık arazi, sera ve topraksız tarım alanlarının tarımsal avantaj ve dezavantaj matrisi.</p>
+        </div>
+
+        <!-- Hologram Card Deck Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            {% for item in uretim_modelleri %}
+            <div class="hologram-card p-8 flex flex-col justify-between hologram-glow-{{ forloop.counter }}">
+                <div>
+                    <!-- Panel Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <span class="px-2.5 py-0.5 text-[9px] font-black tracking-wider text-emerald-800 bg-white/80 border border-white/90 rounded-md uppercase">
+                            {{ item.category }}
+                        </span>
+                        <span class="px-2.5 py-0.5 text-[8px] font-black tracking-wider text-white rounded-full uppercase shadow-sm {% if item.risk_level == 'Çok Yüksek' %}glow-badge-critical{% elif item.risk_level == 'Yüksek' %}glow-badge-high{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}glow-badge-low{% else %}glow-badge-medium{% endif %}">{{ item.risk_level }}</span>
+                    </div>
+
+                    <!-- Always Visible Title -->
+                    <div class="mb-4">
+                        <h3 class="font-extrabold text-gray-900 text-xl tracking-tight">{{ item.title }}</h3>
+                        <p class="accent-font italic text-xs text-emerald-700 font-bold">{{ item.scientific_name }}</p>
+                    </div>
+
+                    <!-- Holographic HUD Dashboard Metrics (Prevents empty look, adds sci-fi aesthetics) -->
+                    {% if forloop.counter == 1 %}
+                    <div class="grid grid-cols-3 gap-2 my-4 p-3 bg-white/30 backdrop-blur-sm rounded-2xl border border-white/40 shadow-inner">
+                        <div class="text-center">
+                            <span class="block text-[8px] font-black text-amber-800 tracking-wider uppercase mb-1">YATIRIM CAPEX</span>
+                            <span class="text-xs font-black text-amber-600">Düşük</span>
+                        </div>
+                        <div class="text-center border-x border-amber-500/10">
+                            <span class="block text-[8px] font-black text-amber-800 tracking-wider uppercase mb-1">DOĞAL AROMA</span>
+                            <span class="text-xs font-black text-amber-600">%95</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-[8px] font-black text-amber-800 tracking-wider uppercase mb-1">TOPRAK YAPISI</span>
+                            <span class="text-xs font-black text-amber-600">Aktif</span>
+                        </div>
+                    </div>
+                    {% elif forloop.counter == 2 %}
+                    <div class="grid grid-cols-3 gap-2 my-4 p-3 bg-white/30 backdrop-blur-sm rounded-2xl border border-white/40 shadow-inner">
+                        <div class="text-center">
+                            <span class="block text-[8px] font-black text-emerald-800 tracking-wider uppercase mb-1">YILLIK HASAT</span>
+                            <span class="text-xs font-black text-emerald-600">4 Kez</span>
+                        </div>
+                        <div class="text-center border-x border-emerald-500/10">
+                            <span class="block text-[8px] font-black text-emerald-800 tracking-wider uppercase mb-1">KONTROL ORANI</span>
+                            <span class="text-xs font-black text-emerald-600">%90</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-[8px] font-black text-emerald-800 tracking-wider uppercase mb-1">SU VERİMLİLİĞİ</span>
+                            <span class="text-xs font-black text-emerald-600">Orta</span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="grid grid-cols-3 gap-2 my-4 p-3 bg-white/30 backdrop-blur-sm rounded-2xl border border-white/40 shadow-inner">
+                        <div class="text-center">
+                            <span class="block text-[8px] font-black text-cyan-800 tracking-wider uppercase mb-1">SU TASARRUFU</span>
+                            <span class="text-xs font-black text-cyan-600">%95</span>
+                        </div>
+                        <div class="text-center border-x border-cyan-500/10">
+                            <span class="block text-[8px] font-black text-cyan-800 tracking-wider uppercase mb-1">VERİM HIZI</span>
+                            <span class="text-xs font-black text-cyan-600">10x</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-[8px] font-black text-cyan-800 tracking-wider uppercase mb-1">ALAN İHTİYACI</span>
+                            <span class="text-xs font-black text-cyan-600">Min</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Expandable Drawer for detailed comparison stats -->
+                    <div class="expandable-wrapper">
+                        <div class="expandable-content">
+                            <p class="text-xs text-gray-650 leading-relaxed mb-6 mt-2">{{ item.description }}</p>
+
+                            <!-- Pros & Cons Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <!-- Pros -->
+                                <div class="space-y-2">
+                                    <h4 class="text-[10px] font-black text-emerald-800 tracking-wider uppercase flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Avantajlar
+                                    </h4>
+                                    <ul class="space-y-1.5 pl-1">
+                                        {% for pro in item.pros %}
+                                        <li class="text-[11px] text-gray-655 font-bold flex items-start gap-1.5">
+                                            <svg class="w-3 h-3 text-emerald-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                            <span>{{ pro.title }}</span>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <!-- Cons -->
+                                <div class="space-y-2">
+                                    <h4 class="text-[10px] font-black text-rose-800 tracking-wider uppercase flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                        Riskler
+                                    </h4>
+                                    <ul class="space-y-1.5 pl-1">
+                                        {% for con in item.cons %}
+                                        <li class="text-[11px] text-gray-655 font-bold flex items-start gap-1.5">
+                                            <svg class="w-3 h-3 text-rose-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                            <span>{{ con.title }}</span>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-150 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full {% if item.risk_level == 'Çok Yüksek' %}bg-rose-500 animate-pulse{% elif item.risk_level == 'Yüksek' %}bg-amber-500{% elif item.risk_level == 'Düşük-Orta' or item.risk_level == 'Düşük' %}bg-sky-500{% else %}bg-emerald-500{% endif %}"></span>
+                        <span class="text-[9px] font-black text-gray-400 tracking-wider uppercase">Sistemik Analiz</span>
+                    </div>
+                    <a href="{% url 'tarla_rehberi_detay' item.slug %}" class="text-[10px] font-extrabold text-emerald-600 hover:text-emerald-800 flex items-center gap-1 group transition">
+                        Detaylı İnceleme
+                        <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Audio Feedback Web Audio API Synthesizer (Holographic offline sound synthesis)
+    let audioContext = null;
+    let audioEnabled = false;
+
+    function toggleAudio() {
+        audioEnabled = !audioEnabled;
+        const offIcon = document.getElementById('audio-off-icon');
+        const onIcon = document.getElementById('audio-on-icon');
+        const btn = document.getElementById('audio-toggle-btn');
+        
+        if (audioEnabled) {
+            offIcon.classList.add('hidden');
+            onIcon.classList.remove('hidden');
+            btn.classList.add('border-emerald-500/40', 'bg-emerald-500/10');
+            
+            // Initialize AudioContext
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            playAudioTone(523.25, 'sine', 0.12); // High C chime
+        } else {
+            onIcon.classList.add('hidden');
+            offIcon.classList.remove('hidden');
+            btn.classList.remove('border-emerald-500/40', 'bg-emerald-500/10');
+            playAudioTone(261.63, 'sine', 0.1); // Low C chime
+        }
+    }
+
+    function playAudioTone(frequency, type = 'sine', duration = 0.1, volume = 0.04) {
+        if (!audioEnabled || !audioContext) return;
+        
+        try {
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
+            const osc = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            osc.type = type;
+            osc.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            
+            gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            osc.start();
+            osc.stop(audioContext.currentTime + duration);
+        } catch (e) {
+            console.warn("Audio Context playback warning: ", e);
+        }
+    }
+
+    // Live filtering and search
+    let activeTagFilter = 'all';
+
+    function toggleTagFilter(tag) {
+        // Reset active filter button styling
+        document.querySelectorAll('.tag-filter-btn').forEach(btn => {
+            btn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+            btn.classList.add('bg-white/60', 'text-gray-800', 'border-white/70');
+        });
+        
+        // Highlight active filter button
+        const activeBtn = event ? event.currentTarget : document.getElementById('tag-filter-all');
+        if (activeBtn) {
+            activeBtn.classList.remove('bg-white/60', 'text-gray-800', 'border-white/70');
+            activeBtn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+        }
+        
+        activeTagFilter = tag;
+        filterBentoCards();
+        playAudioTone(380, 'sine', 0.08, 0.03); // micro feedback sound
+    }
+
+    function filterBentoCards() {
+        const query = document.getElementById('live-search').value.toLowerCase().trim();
+        const activeSeasonTab = document.querySelector('.season-tab-btn.text-white');
+        const activeSeason = activeSeasonTab ? activeSeasonTab.id.replace('tab-', '') : 'ilkbahar';
+        
+        const activeContainer = document.getElementById('content-' + activeSeason);
+        if (!activeContainer) return;
+        
+        const cards = activeContainer.querySelectorAll('.premium-bento-card');
+        cards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            const scientificName = card.querySelector('.accent-font') ? card.querySelector('.accent-font').innerText.toLowerCase() : '';
+            const description = card.querySelector('p').innerText.toLowerCase();
+            const category = card.querySelector('.bg-white\\/80, .bg-white\\/70').innerText; 
+            const riskLevel = card.querySelector('.glow-badge-critical, .glow-badge-high, .glow-badge-medium, .glow-badge-low').innerText;
+            
+            const matchesQuery = title.includes(query) || scientificName.includes(query) || description.includes(query);
+            
+            let matchesTag = false;
+            if (activeTagFilter === 'all') {
+                matchesTag = true;
+            } else if (activeTagFilter === 'Hastalık' || activeTagFilter === 'Zararlı') {
+                matchesTag = category.toLowerCase().includes(activeTagFilter.toLowerCase());
+            } else {
+                matchesTag = riskLevel.toLowerCase() === activeTagFilter.toLowerCase();
+            }
+            
+            if (matchesQuery && matchesTag) {
+                card.style.display = '';
+                // Trigger smooth fade in
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                }, 10);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    if (card.style.opacity === '0') {
+                        card.style.display = 'none';
+                    }
+                }, 300);
+            }
+        });
+    }
+
+    function switchSeason(season) {
+        // Hide all seasonal contents
+        const contents = document.querySelectorAll('.season-content');
+        contents.forEach(el => el.classList.add('hidden'));
+
+        // Show selected season content
+        const target = document.getElementById('content-' + season);
+        if (target) {
+            target.classList.remove('hidden');
+        }
+
+        // Reset all tabs active state text styling
+        const tabs = document.querySelectorAll('.season-tab-btn');
+        tabs.forEach(el => {
+            el.classList.remove('text-white');
+            el.classList.add('text-gray-800');
+        });
+
+        // Set clicked tab text to white
+        const clickedTab = document.getElementById('tab-' + season);
+        if (clickedTab) {
+            clickedTab.classList.remove('text-gray-800');
+            clickedTab.classList.add('text-white');
+        }
+
+        // Slide the backdrop indicator
+        updateTabIndicator(season);
+
+        // Update Dynamic Ambient Themes
+        updateAmbientTheme(season);
+
+        // Re-apply filters for the newly active seasonal container
+        filterBentoCards();
+
+        playAudioTone(440, 'sine', 0.08, 0.03); // Switch season audio cue
+    }
+
+    function updateTabIndicator(season) {
+        const activeTab = document.getElementById('tab-' + season);
+        const indicator = document.getElementById('tab-indicator');
+        if (activeTab && indicator) {
+            indicator.style.width = activeTab.offsetWidth + 'px';
+            indicator.style.transform = `translateX(${activeTab.offsetLeft - 6}px)`; // Offset adjust matching pad
+            
+            // Set indicator gradient by season
+            if (season === 'ilkbahar') {
+                indicator.className = "absolute top-1.5 bottom-1.5 rounded-[16px] bg-gradient-to-r from-emerald-500 to-green-600 shadow-md shadow-emerald-500/20 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] z-0";
+            } else if (season === 'yaz') {
+                indicator.className = "absolute top-1.5 bottom-1.5 rounded-[16px] bg-gradient-to-r from-amber-500 to-amber-600 shadow-md shadow-amber-500/20 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] z-0";
+            } else if (season === 'sonbahar') {
+                indicator.className = "absolute top-1.5 bottom-1.5 rounded-[16px] bg-gradient-to-r from-orange-500 to-orange-600 shadow-md shadow-orange-500/20 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] z-0";
+            } else if (season === 'kis') {
+                indicator.className = "absolute top-1.5 bottom-1.5 rounded-[16px] bg-gradient-to-r from-sky-500 to-blue-600 shadow-md shadow-sky-500/20 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] z-0";
+            }
+        }
+    }
+
+    function updateAmbientTheme(season) {
+        const orb1 = document.getElementById('orb-1');
+        const orb2 = document.getElementById('orb-2');
+        if (orb1 && orb2) {
+            if (season === 'ilkbahar') {
+                orb1.className = "absolute -top-24 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-20 bg-emerald-400 transition-all duration-1000 ease-in-out";
+                orb2.className = "absolute top-36 right-1/4 w-[500px] h-[500px] rounded-full blur-[130px] opacity-15 bg-teal-300 transition-all duration-1000 ease-in-out";
+            } else if (season === 'yaz') {
+                orb1.className = "absolute -top-24 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-25 bg-amber-400 transition-all duration-1000 ease-in-out";
+                orb2.className = "absolute top-36 right-1/4 w-[500px] h-[500px] rounded-full blur-[130px] opacity-20 bg-yellow-300 transition-all duration-1000 ease-in-out";
+            } else if (season === 'sonbahar') {
+                orb1.className = "absolute -top-24 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-22 bg-orange-400 transition-all duration-1000 ease-in-out";
+                orb2.className = "absolute top-36 right-1/4 w-[500px] h-[500px] rounded-full blur-[130px] opacity-20 bg-amber-500 transition-all duration-1000 ease-in-out";
+            } else if (season === 'kis') {
+                orb1.className = "absolute -top-24 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-20 bg-sky-400 transition-all duration-1000 ease-in-out";
+                orb2.className = "absolute top-36 right-1/4 w-[500px] h-[500px] rounded-full blur-[130px] opacity-20 bg-blue-400 transition-all duration-1000 ease-in-out";
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize indicator position
+        setTimeout(() => {
+            updateTabIndicator('ilkbahar');
+        }, 150);
+
+        // Adjust indicator on resize
+        window.addEventListener('resize', () => {
+            const activeTab = document.querySelector('.season-tab-btn.text-white');
+            if (activeTab) {
+                const season = activeTab.id.replace('tab-', '');
+                updateTabIndicator(season);
+            }
+        });
+
+        // Dynamic Spotlight tracking listener
+        function initSpotlight() {
+            const cards = document.querySelectorAll('.premium-bento-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+                
+                // Play hover tone
+                card.addEventListener('mouseenter', () => {
+                    playAudioTone(580, 'sine', 0.02, 0.015);
+                });
+            });
+            
+            // Add hover tone to hologram comparison cards
+            const holograms = document.querySelectorAll('.hologram-card');
+            holograms.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    playAudioTone(640, 'sine', 0.03, 0.02);
+                });
+            });
+        }
+        initSpotlight();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Kullanım Koşulları | Verda{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts - Plus Jakarta Sans & Playfair Display for Elite Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+<style>
+    .premium-font {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .accent-font {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Premium glass card design */
+    .siber-glass-panel {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(28px) saturate(180%);
+        -webkit-backdrop-filter: blur(28px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 32px;
+        box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.03);
+    }
+    
+    .terms-block {
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+    .terms-block:hover {
+        background: rgba(255, 255, 255, 0.8);
+        border-color: rgba(255, 255, 255, 0.95);
+        transform: translateY(-1px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-16 premium-font">
+
+    <!-- Header Section -->
+    <div class="text-center mb-16 relative">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-[10px] font-black tracking-widest uppercase mb-4">
+            KURALLAR & KULLANIM
+        </span>
+        <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight">Kullanım Koşulları</h1>
+        <p class="mt-4 text-gray-500 font-semibold text-sm max-w-xl mx-auto leading-relaxed">Verda Platformu'nu kullanırken kabul ettiğiniz genel kullanım ve yasal sorumluluk kuralları.</p>
+    </div>
+
+    <!-- Main Glass Board -->
+    <div class="siber-glass-panel p-8 md:p-12 mb-12 relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-48 h-48 bg-emerald-400 opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="space-y-6 leading-relaxed text-gray-700 text-sm font-medium">
+            <p class="mb-8 text-xs text-gray-400">Son Güncelleme: 29 Mayıs 2026</p>
+
+            <div class="terms-block p-6">
+                <h3 class="font-black text-gray-900 text-base mb-3">1. Kabul Edilme ve Hizmet Kapsamı</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    Verda web uygulamasına veya mobil uygulamalarına erişim sağlayarak, bu koşulların tamamını peşinen kabul etmiş bulunursunuz. Platformumuz, tarımsal yaprak fotoğrafları üzerinden yapay zeka yardımıyla teşhis önerileri sunar. Bu hizmetlerin ziraat mühendisliği açısından nihai kesinliği olmayıp, rehberlik amaçlıdır.
+                </p>
+            </div>
+
+            <div class="terms-block p-6">
+                <h3 class="font-black text-gray-900 text-base mb-3">2. Kullanıcı Yükümlülükleri ve Görsel Yüklemeler</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    Kullanıcılar sisteme yükledikleri tüm görsellerin, verilerin ve yorumların yasal telif hakkına sahip olduğunu garanti ederler. Zararlı, yasadışı, hakaret içerikli veya tarım dışı alakasız görsellerin yüklenmesi durumunda hesabınız askıya alınabilir veya sonlandırılabilir.
+                </p>
+            </div>
+
+            <div class="terms-block p-6">
+                <h3 class="font-black text-gray-900 text-base mb-3">3. AI Teşhis ve Sorumluluk Reddi</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    Yapay zeka modellerimiz (CNN, EfficientNet vb.) yüksek doğruluk oranlarına sahip olsa da, doğadaki değişken faktörler nedeniyle asla %100 kusursuz bilgi vermez. Bu sebeple ziraat uygulamalarında, ilaçlamalarda veya büyük ekonomik yatırımlarda ziraat mühendislerinden de onay alınması tavsiye edilir. Oluşabilecek mahsul veya rekolte kayıplarından Verda sorumlu tutulamaz.
+                </p>
+            </div>
+
+            <div class="terms-block p-6">
+                <h3 class="font-black text-gray-900 text-base mb-3">4. Fikri Mülkiyet Hakları</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    Verda logosu, arayüz tasarımları, XAI model çıktıları, veri tabanı ve yazılım kaynak kodları Verda Platformu'nun fikri mülkiyetindedir. Yazılı izin alınmadan kopyalanamaz, çoğaltılamaz veya üçüncü parti ticari amaçlarla entegre edilemez.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if edit_mode %}Teşhisi Güncelle{% else %}Yeni Teşhis Tanımla{% endif %} | Verda Admin{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts - Plus Jakarta Sans & Playfair Display for Elite Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+    /* Global Premium Font Override */
+    .premium-font {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* High-End Frosted Glass Form Container */
+    .glass-form-card {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 28px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Sleek form control overrides targeting standard Django widgets */
+    .glass-form-card form input[type="text"],
+    .glass-form-card form select,
+    .glass-form-card form textarea {
+        display: block;
+        width: 100%;
+        padding: 12px 18px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+        background: rgba(255, 255, 255, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        border-radius: 16px;
+        outline: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .glass-form-card form input[type="text"]:focus,
+    .glass-form-card form select:focus,
+    .glass-form-card form textarea:focus {
+        background: rgba(255, 255, 255, 0.75);
+        border-color: rgba(34, 197, 94, 0.5);
+        box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
+    }
+
+    .glass-form-card form textarea {
+        resize: vertical;
+        min-height: 110px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Immersive Ambient Glow -->
+<div class="absolute -top-[120px] left-0 w-full h-[520px] bg-gradient-to-b from-brand-100/30 to-transparent -z-10"></div>
+
+<div class="max-w-4xl mx-auto px-4 py-12 premium-font">
+
+    <!-- Back Navigation Breadcrumb -->
+    <div class="mb-8 flex items-center space-x-3 text-gray-500">
+        <a href="{% url 'plant_detail' plant.id %}" class="hover:text-brand-600 font-extrabold text-xs tracking-wider uppercase flex items-center transition group">
+            <div class="p-2.5 rounded-xl bg-white/45 border border-white/60 group-hover:bg-white/70 mr-3 transition shadow-sm flex items-center justify-center">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </div>
+            Bitki Sayfasına Dön
+        </a>
+    </div>
+
+    <!-- Glass Form Card -->
+    <div class="glass-form-card overflow-hidden">
+        
+        <!-- Header banner -->
+        <div class="p-8 bg-brand-600 text-white flex items-center justify-between border-b border-brand-500/10 relative">
+            <!-- Ambient top-right aura -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="flex items-center space-x-4 relative z-10">
+                <div class="p-3 bg-white/20 rounded-2xl border border-white/10">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black tracking-tight">{% if edit_mode %}Teşhisi Güncelle{% else %}Yeni Teşhis Tanımla{% endif %}</h1>
+                    <p class="text-brand-100 text-xs font-semibold mt-1">**{{ plant.name }}** bitki türü için klinik veri girişi.</p>
+                </div>
+            </div>
+            <a href="{% url 'plant_detail' plant.id %}" class="text-white/80 hover:text-white transition font-bold text-xs tracking-wider uppercase underline relative z-10">Vazgeç</a>
+        </div>
+
+        <div class="p-8">
+            <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <!-- Grid span assignment depending on form field name for custom beautiful sizing -->
+                <div class="{% if field.name == 'symptoms' or field.name == 'organic_treatment' or field.name == 'chemical_treatment' or field.name == 'prevention' %}md:col-span-2{% endif %}">
+                    <label class="block text-xs font-black uppercase tracking-widest text-gray-700 mb-2.5">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">{{ field.help_text }}</p>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="mt-2 text-xs text-red-600 font-bold flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-600 mr-2"></span>
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+
+                <!-- Form Submit action -->
+                <div class="md:col-span-2 mt-8 flex justify-end">
+                    <button type="submit" class="inline-flex items-center px-10 py-4 border border-transparent rounded-2xl shadow-md text-base font-extrabold text-white bg-brand-600 hover:bg-brand-500 focus:outline-none transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 shadow-brand-600/15">
+                        Teşhisi Veri Tabanına Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

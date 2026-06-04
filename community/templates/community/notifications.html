@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Bildirimler | Verda{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-12">
+    <div class="flex items-center space-x-3 mb-8">
+        <div class="p-3 bg-brand-100 text-brand-600 rounded-2xl">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+        </div>
+        <h1 class="text-3xl font-extrabold text-gray-900">Bildirimlerim</h1>
+    </div>
+    
+    <div class="space-y-3">
+        {% for note in notifications %}
+        <a href="{% url 'post_detail' note.post.id %}" class="block bg-white p-4 rounded-2xl border border-gray-100 hover:border-brand-300 transition-all shadow-sm">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 font-bold">
+                    {{ note.sender.user.username|make_list|first|upper }}
+                </div>
+                <div class="flex-grow">
+                    <p class="text-gray-700 text-sm">
+                        <span class="font-bold text-gray-900">{{ note.sender.user.username }}</span> {{ note.text }}
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1">{{ note.created_at|timesince }} önce</p>
+                </div>
+                <div class="w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-gray-100">
+                    <img src="{{ note.post.image.url }}" class="w-full h-full object-cover opacity-50">
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div class="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-100">
+            <p class="text-gray-400 font-medium">Henüz bir bildirim yok.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
