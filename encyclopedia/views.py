@@ -9,15 +9,34 @@ import google.generativeai as genai
 from django.views.decorators.csrf import csrf_exempt
 
 def encyclopedia_view(request):
-    query = request.GET.get('q')  # Arama çubuğundan gelen veri
-    if query:
-        plants = Plant.objects.filter(
-            Q(name__icontains=query) | Q(scientific_name__icontains=query)
-        ).prefetch_related('diseases')
-    else:
-        plants = Plant.objects.prefetch_related('diseases').all()
+    query = request.GET.get('q', '').strip()  # Arama çubuğundan gelen veri
+    category = request.GET.get('category', 'Tümü').strip()
+    page = request.GET.get('page', 1)
 
-    return render(request, 'encyclopedia/encyclopedia.html', {'plants': plants, 'query': query})
+    plants = Plant.objects.prefetch_related('diseases')
+
+    if query:
+        plants = plants.filter(
+            Q(name__icontains=query) | Q(scientific_name__icontains=query)
+        )
+
+    if category and category != 'Tümü':
+        plants = plants.filter(category=category)
+
+    from django.core.paginator import Paginator
+    paginator = Paginator(plants, 6)
+    page_obj = paginator.get_page(page)
+
+    context = {
+        'page_obj': page_obj,
+        'query': query,
+        'current_category': category,
+    }
+
+    if request.GET.get('ajax') == '1' or request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'encyclopedia/partials/encyclopedia_grid.html', context)
+
+    return render(request, 'encyclopedia/encyclopedia.html', context)
 
 
 def plant_detail(request, pk):
@@ -105,9 +124,8 @@ def plant_chat_api(request):
             plant_name = data.get('plant_name', 'Bitki')
             question = data.get('question', '')
 
-            # Görseldeki o ...k1Ws ile biten anahtarını buraya yapıştır
-            genai.configure(api_key="AIzaSyBOWZwCsSc4yGJjuf3zLSbEugxdUA9k1Ws")
-            # Güncel kütüphane ile bu model artık sorunsuz çalışacak
+            from core.utils import get_gemini_api_key
+            genai.configure(api_key=get_gemini_api_key())
             model = genai.GenerativeModel('gemini-2.5-flash')
 
             prompt = f"Sen tecrübeli bir ziraat mühendisisin. Çiftçi sana '{plant_name}' bitkisi hakkında şu soruyu soruyor: '{question}'. Çok kısa, samimi ve madde madde yanıt ver."

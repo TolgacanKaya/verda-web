@@ -8,6 +8,19 @@ from django.utils.timesince import timesince
 import json
 
 
+ZIRAAT_TIPS = [
+    "Erken yanıklığı önlemek için sabah erken saatlerde damlama sulama yapın. Yaprakların ıslak kalması mantar hastalıklarını tetikler.",
+    "Tarlanızdaki yabancı otlarla mücadele etmek, kültür bitkilerinizin besin ve su rekabetini azaltarak verimi %20'ye kadar artırır.",
+    "Potasyum oranı yüksek gübreler, bitkilerinizin kuraklığa ve soğuk hava şartlarına karşı direncini artıracaktır.",
+    "Kalsiyum eksikliği domateslerde dip çürüklüğüne (çiçek burnu çürüklüğü) sebep olur. Sulama düzenine dikkat edin.",
+    "Böcek zararlılarını uzak tutmak için kadife çiçeği gibi faydalı bitkileri tarlanızın sınırlarına ekebilirsiniz.",
+    "Mantar hastalıklarının yayılmasını önlemek için budama makaslarınızı her kullanımdan sonra alkolle sterilize edin.",
+    "Toprak analizini yaptırmadan gübreleme yapmayın. Aşırı azotlu gübreleme bitkileri hastalıklara daha duyarlı hale getirebilir.",
+    "Uğur böcekleri gibi faydalı böcekleri tarlanıza çekmek için kimyasal ilaç kullanımını azaltın; yaprak bitlerini doğal yolla yok ederler.",
+    "Hastalık belirtisi gösteren yaprak ve dalları budayıp tarladan uzaklaştırarak imha edin.",
+    "Bitkilerinizin güçlü bir kök yapısına sahip olması için gelişim döneminin başında fosfor ağırlıklı gübrelemeyi tercih edin."
+]
+
 # @login_required SİLİNDİ
 def feed_view(request):
     posts = Post.objects.select_related('author__user', 'related_plant').prefetch_related('comments').all()
@@ -23,7 +36,34 @@ def feed_view(request):
             post.save()
             return redirect('feed')
 
-    return render(request, 'community/feed.html', {'posts': posts, 'form': form})
+    # Köy Meydanı Yan Panelleri İçin İstatistikler ve Popüler Etiketler
+    from django.db.models import Count
+    from encyclopedia.models import Plant
+    
+    popular_plants = Plant.objects.annotate(post_count=Count('post')).filter(post_count__gt=0).order_by('-post_count')[:5]
+    if not popular_plants.exists():
+        # Fallback to general plants if no posts have tags yet
+        popular_plants = Plant.objects.all()[:5]
+        
+    total_farmers = FarmerProfile.objects.count()
+    total_posts = posts.count()
+    solved_posts = Post.objects.filter(is_solved=True).count()
+
+    import datetime
+    day_of_year = datetime.date.today().timetuple().tm_yday
+    tip_of_the_day = ZIRAAT_TIPS[day_of_year % len(ZIRAAT_TIPS)]
+
+    context = {
+        'posts': posts, 
+        'form': form,
+        'popular_plants': popular_plants,
+        'total_farmers': total_farmers,
+        'total_posts': total_posts,
+        'solved_posts': solved_posts,
+        'tip_of_the_day': tip_of_the_day
+    }
+
+    return render(request, 'community/feed.html', context)
 
 @login_required
 def post_detail_view(request, pk):

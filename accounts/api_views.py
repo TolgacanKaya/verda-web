@@ -302,7 +302,8 @@ def favorite_plants_ai_api(request):
         
         import google.generativeai as genai
         try:
-            genai.configure(api_key="AIzaSyBOWZwCsSc4yGJjuf3zLSbEugxdUA9k1Ws")
+            from core.utils import get_gemini_api_key
+            genai.configure(api_key=get_gemini_api_key())
             model = genai.GenerativeModel('gemini-2.5-flash')
             
             prompt = (

@@ -112,6 +112,22 @@
         }
         .navbar-active-earth { animation: navbar-earth-glow-rich 6s infinite alternate ease-in-out; }
 
+        @keyframes navbar-air-glow-rich {
+            0% {
+                box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 0 0px rgba(100, 116, 139, 0);
+                border-color: rgba(255, 255, 255, 0.85);
+            }
+            50% {
+                box-shadow: 0 12px 25px -4px rgba(100, 116, 139, 0.15), 0 0 15px rgba(148, 163, 184, 0.25);
+                border-color: rgba(148, 163, 184, 0.45);
+            }
+            100% {
+                box-shadow: 0 15px 35px -5px rgba(100, 116, 139, 0.35), 0 0 35px rgba(148, 163, 184, 0.55);
+                border-color: rgba(100, 116, 139, 0.65);
+            }
+        }
+        .navbar-active-air { animation: navbar-air-glow-rich 6s infinite alternate ease-in-out; }
+
         /* Buton İçi Ateş (Ember) Parçacık Animasyonları */
         @keyframes ember-rise {
             0% { transform: translateY(105%) scale(0.3) rotate(0deg); opacity: 0; }
@@ -186,6 +202,27 @@
         .animate-navbar-leaf-2 { animation: navbar-wind-leaf 4.8s infinite ease-in-out 1.6s; }
         .animate-navbar-leaf-3 { animation: navbar-wind-leaf 7.2s infinite ease-in-out 3.2s; }
 
+        /* Hava/Bulut Animasyonları */
+        @keyframes cloud-drift {
+            0% { transform: translateX(-30%) translateY(10%) scale(0.6); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateX(80%) translateY(-20%) scale(1.4); opacity: 0; }
+        }
+        .animate-cloud-1 { animation: cloud-drift 4s infinite linear; }
+        .animate-cloud-2 { animation: cloud-drift 5.5s infinite linear 1.2s; }
+        .animate-cloud-3 { animation: cloud-drift 4.8s infinite linear 2.5s; }
+
+        @keyframes navbar-cloud-drift {
+            0% { transform: translateX(-40px) translateY(10px) scale(0.6); opacity: 0; }
+            25% { opacity: 0.5; }
+            75% { opacity: 0.5; }
+            100% { transform: translateX(120px) translateY(-5px) scale(1.5); opacity: 0; }
+        }
+        .animate-navbar-cloud-1 { animation: navbar-cloud-drift 6.5s infinite linear; }
+        .animate-navbar-cloud-2 { animation: navbar-cloud-drift 8s infinite linear 2.5s; }
+        .animate-navbar-cloud-3 { animation: navbar-cloud-drift 7.5s infinite linear 4.5s; }
+
         /* Köy Meydanı Toprak Yarıkları Animasyonları */
         @keyframes crack-glow-internal {
             0%, 100% { opacity: 0.3; filter: drop-shadow(0 0 1px rgba(245, 158, 11, 0.3)); }
@@ -213,7 +250,7 @@
 
     <!-- Yüzen Ada (Floating Island) Navbar -->
     <div id="navbar-wrapper" class="sticky top-0 z-40 w-full px-4 py-4 sm:px-6 lg:px-8 transition-all duration-300">
-        <nav id="navbar-body" class="max-w-7xl mx-auto bg-white/75 backdrop-blur-xl border border-white/85 shadow-lg shadow-emerald-950/5 rounded-2xl transition-all duration-300 relative {% if request.resolver_match.url_name == 'home' %}navbar-active-fire{% elif request.resolver_match.url_name == 'diagnose' or 'diagnostic' in request.resolver_match.url_name or 'diagnose' in request.path %}navbar-active-water{% elif 'encyclopedia' in request.resolver_match.url_name or 'encyclopedia' in request.path or 'ansiklopedi' in request.path or request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}navbar-active-nature{% elif request.resolver_match.url_name == 'feed' or 'post' in request.resolver_match.url_name or 'meydan' in request.path or 'feed' in request.path %}navbar-active-earth{% endif %}">
+        <nav id="navbar-body" class="max-w-7xl mx-auto bg-white/75 backdrop-blur-xl border border-white/85 shadow-lg shadow-emerald-950/5 rounded-2xl transition-all duration-300 relative {% if request.resolver_match.url_name == 'home' %}navbar-active-fire{% elif request.resolver_match.url_name == 'diagnose' or 'diagnostic' in request.resolver_match.url_name or 'diagnose' in request.path %}navbar-active-water{% elif 'encyclopedia' in request.resolver_match.url_name or 'encyclopedia' in request.path or 'ansiklopedi' in request.path %}navbar-active-nature{% elif request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}navbar-active-air{% elif request.resolver_match.url_name == 'feed' or 'post' in request.resolver_match.url_name or 'meydan' in request.path or 'feed' in request.path %}navbar-active-earth{% endif %}">
             
             <!-- Global Navbar Elementel Efekt Katmanları (Zamanla Yükselen Auralar) -->
             {% if request.resolver_match.url_name == 'home' %}
@@ -236,12 +273,19 @@
                     <span class="absolute bottom-0 left-[75%] w-2 h-2 rounded-full border border-cyan-200/60 bg-transparent animate-navbar-bubble-1"></span>
                     <span class="absolute bottom-0 left-[90%] w-1.5 h-1.5 rounded-full border border-sky-200/50 bg-transparent animate-navbar-bubble-2"></span>
                 </div>
-            {% elif 'encyclopedia' in request.resolver_match.url_name or 'encyclopedia' in request.path or 'ansiklopedi' in request.path or request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}
+            {% elif 'encyclopedia' in request.resolver_match.url_name or 'encyclopedia' in request.path or 'ansiklopedi' in request.path %}
                 <!-- Doğa Yaprakları Esintisi -->
                 <div class="absolute inset-x-0 bottom-0 h-8 overflow-hidden pointer-events-none rounded-b-2xl z-0">
                     <svg class="absolute bottom-0.5 left-[15%] w-3 h-3 text-lime-400/40 animate-navbar-leaf-1" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.1 5.9 16.1S10 18 16 11c0 0 1.9 4 4.1 4.1S22 11 22 11s-2-2.1-5-3z"></path></svg>
                     <svg class="absolute bottom-0.5 left-[45%] w-2.5 h-2.5 text-emerald-400/35 animate-navbar-leaf-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.1 5.9 16.1S10 18 16 11c0 0 1.9 4 4.1 4.1S22 11 22 11s-2-2.1-5-3z"></path></svg>
                     <svg class="absolute bottom-0.5 left-[75%] w-3.5 h-3.5 text-green-400/40 animate-navbar-leaf-3" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.1 5.9 16.1S10 18 16 11c0 0 1.9 4 4.1 4.1S22 11 22 11s-2-2.1-5-3z"></path></svg>
+                </div>
+            {% elif request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}
+                <!-- Hava/Bulut Esintisi -->
+                <div class="absolute inset-x-0 bottom-0 h-8 overflow-hidden pointer-events-none rounded-b-2xl z-0">
+                    <svg class="absolute bottom-0.5 left-[15%] w-4 h-4 text-slate-400/50 animate-navbar-cloud-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 11.5A5.5 5.5 0 019.5 6a5.5 5.5 0 015.398 4.457A4 4 0 0118.5 18H5a4 4 0 01-1-7.857A5.484 5.484 0 014 11.5z" clip-rule="evenodd"></path></svg>
+                    <svg class="absolute bottom-0.5 left-[45%] w-3.5 h-3.5 text-gray-400/45 animate-navbar-cloud-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 11.5A5.5 5.5 0 019.5 6a5.5 5.5 0 015.398 4.457A4 4 0 0118.5 18H5a4 4 0 01-1-7.857A5.484 5.484 0 014 11.5z" clip-rule="evenodd"></path></svg>
+                    <svg class="absolute bottom-0.5 left-[75%] w-4.5 h-4.5 text-zinc-400/50 animate-navbar-cloud-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 11.5A5.5 5.5 0 019.5 6a5.5 5.5 0 015.398 4.457A4 4 0 0118.5 18H5a4 4 0 01-1-7.857A5.484 5.484 0 014 11.5z" clip-rule="evenodd"></path></svg>
                 </div>
             {% elif request.resolver_match.url_name == 'feed' or 'post' in request.resolver_match.url_name or 'meydan' in request.path or 'feed' in request.path %}
                 <!-- Köy Meydanı Toprak Çatlakları -->
@@ -311,15 +355,15 @@
                             </div>
                             {% endif %}
                         </a>
-                        <a href="{% url 'tarla_rehberi' %}" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-extrabold transition-all duration-300 group relative z-10 {% if request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}bg-gradient-to-r from-emerald-600 via-emerald-500 to-green-400 animate-gradient-fast text-white shadow-md shadow-emerald-500/25 scale-[1.03]{% else %}text-gray-600 hover:text-emerald-600 hover:scale-[1.03]{% endif %}">
+                        <a href="{% url 'tarla_rehberi' %}" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-extrabold transition-all duration-300 group relative z-10 {% if request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}bg-gradient-to-r from-slate-500 via-gray-400 to-zinc-400 animate-gradient-fast text-white shadow-md shadow-slate-500/25 scale-[1.03]{% else %}text-gray-600 hover:text-slate-600 hover:scale-[1.03]{% endif %}">
                             <svg class="w-4 h-4 transition-all duration-300 group-hover:-rotate-12 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-120 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 20l-5.447-2.724A2 2 0 013 15.485V5.13a2 2 0 011.106-1.789l5.447-2.724a2 2 0 011.896 0l5.447 2.724A2 2 0 0118 5.13v10.355a2 2 0 01-1.106 1.789L11.447 20a2 2 0 01-1.896 0zM9 1v18M18 5.13v10.355a2 2 0 01-1.106 1.789L11.447 20a2 2 0 01-1.896 0z"></path></svg>
                             <span class="relative z-10">Tarla Rehberi</span>
                             {% if request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}
                             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
-                                <!-- Doğa Rüzgarı ve Yapraklar -->
-                                <svg class="absolute bottom-1 left-[15%] w-3 h-3 text-lime-400/50 animate-leaf-1" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.1 5.9 16.1S10 18 16 11c0 0 1.9 4 4.1 4.1S22 11 22 11s-2-2.1-5-3z"></path></svg>
-                                <svg class="absolute bottom-1 left-[45%] w-2.5 h-2.5 text-emerald-400/60 animate-leaf-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.1 5.9 16.1S10 18 16 11c0 0 1.9 4 4.1 4.1S22 11 22 11s-2-2.1-5-3z"></path></svg>
-                                <svg class="absolute bottom-1 left-[75%] w-3.5 h-3.5 text-green-300/50 animate-leaf-3" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.1 5.9 16.1S10 18 16 11c0 0 1.9 4 4.1 4.1S22 11 22 11s-2-2.1-5-3z"></path></svg>
+                                <!-- Hava/Bulut Esintisi -->
+                                <svg class="absolute bottom-1 left-[15%] w-4 h-4 text-slate-100/60 animate-cloud-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 11.5A5.5 5.5 0 019.5 6a5.5 5.5 0 015.398 4.457A4 4 0 0118.5 18H5a4 4 0 01-1-7.857A5.484 5.484 0 014 11.5z" clip-rule="evenodd"></path></svg>
+                                <svg class="absolute bottom-1 left-[45%] w-3.5 h-3.5 text-gray-100/70 animate-cloud-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 11.5A5.5 5.5 0 019.5 6a5.5 5.5 0 015.398 4.457A4 4 0 0118.5 18H5a4 4 0 01-1-7.857A5.484 5.484 0 014 11.5z" clip-rule="evenodd"></path></svg>
+                                <svg class="absolute bottom-1 left-[75%] w-4.5 h-4.5 text-zinc-100/60 animate-cloud-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 11.5A5.5 5.5 0 019.5 6a5.5 5.5 0 015.398 4.457A4 4 0 0118.5 18H5a4 4 0 01-1-7.857A5.484 5.484 0 014 11.5z" clip-rule="evenodd"></path></svg>
                             </div>
                             {% endif %}
                         </a>
@@ -459,7 +503,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                         Ansiklopedi
                     </a>
-                    <a href="{% url 'tarla_rehberi' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-extrabold transition-all duration-200 {% if request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}bg-gradient-to-r from-emerald-600 via-green-500 to-teal-600 animate-gradient-fast text-white shadow-sm{% else %}text-gray-600 hover:bg-emerald-50/50 hover:text-emerald-700{% endif %}">
+                    <a href="{% url 'tarla_rehberi' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-extrabold transition-all duration-200 {% if request.resolver_match.url_name == 'tarla_rehberi' or 'tarla-rehberi' in request.path %}bg-gradient-to-r from-slate-500 via-gray-400 to-zinc-400 animate-gradient-fast text-white shadow-sm{% else %}text-gray-600 hover:bg-slate-50/50 hover:text-slate-700{% endif %}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 20l-5.447-2.724A2 2 0 013 15.485V5.13a2 2 0 011.106-1.789l5.447-2.724a2 2 0 011.896 0l5.447 2.724A2 2 0 0118 5.13v10.355a2 2 0 01-1.106 1.789L11.447 20a2 2 0 01-1.896 0zM9 1v18M18 5.13v10.355a2 2 0 01-1.106 1.789L11.447 20a2 2 0 01-1.896 0z"></path></svg>
                         Tarla Rehberi
                     </a>

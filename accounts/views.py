@@ -55,37 +55,10 @@ def logout_view(request):
         logout(request)
     return redirect('/hesap/giris')
 
-def load_env_var(var_name, default=None):
-    import os
-    from pathlib import Path
-    base_dir = Path(__file__).resolve().parent.parent
-    for p in [base_dir, base_dir.parent]:
-        env_file = p / '.env'
-        if env_file.exists():
-            try:
-                with open(env_file, 'r', encoding='utf-8') as f:
-                    for line in f:
-                        line = line.strip()
-                        if line and not line.startswith('#') and '=' in line:
-                            k, v = line.split('=', 1)
-                            if k.strip() == var_name:
-                                val = v.strip()
-                                if val.startswith(('"', "'")) and val.endswith(('"', "'")):
-                                    val = val[1:-1]
-                                return val
-            except Exception:
-                pass
-    return os.environ.get(var_name, default)
+from core.utils import get_openweather_api_key
 
 def get_weather_data(lat=None, lon=None, city_name=None):
-    # Try multiple common key names from .env
-    API_KEY = None
-    for key_name in ['OPENWEATHER_API_KEY', 'OPENWEATHER_KEY', 'WEATHER_API_KEY', 'API_KEY']:
-        API_KEY = load_env_var(key_name)
-        if API_KEY:
-            break
-    if not API_KEY:
-        API_KEY = "c8d51cf57ddfcf8e0ce4663ef108efd7" # Fallback working API Key
+    API_KEY = get_openweather_api_key()
     
     if lat and lon:
         weather_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&units=metric&lang=tr"

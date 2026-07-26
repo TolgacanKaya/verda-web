@@ -486,6 +486,72 @@
         </div>
     </div>
 
+    <!-- Tarla Rehberi Keşif Alanı -->
+    <div class="mb-12 cascade-item delay-500">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+            <div>
+                <span class="text-[9px] font-black text-slate-700 bg-slate-100/70 border border-slate-200/50 rounded-lg px-2.5 py-1 uppercase tracking-widest">ÇİFTÇİNİN AKILLI ASİSTANI</span>
+                <h2 class="text-2xl font-black text-gray-950 tracking-tight mt-2.5">Tarla Rehberini İnceleyin</h2>
+                <p class="text-gray-500 text-xs font-semibold leading-relaxed mt-1">Gelişmiş tarla yönetimi, iklimlendirme stratejileri ve bölgesel bitki gelişim taktikleri ile veriminizi artırın.</p>
+            </div>
+            <a href="{% url 'tarla_rehberi' %}" class="inline-flex items-center px-4 py-2.5 rounded-2xl bg-slate-600 hover:bg-slate-700 text-white text-xs font-bold shadow-md shadow-slate-600/10 hover:shadow-lg transition-all duration-300 self-start md:self-auto relative z-10">
+                Rehbere Git
+                <svg class="w-3.5 h-3.5 ml-1.5 text-white/90" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+        
+        <!-- Tarla Rehberi Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Temel Tarım Prensipleri -->
+            <a href="{% url 'tarla_rehberi' %}?kategori=temel" class="nature-glass-strip p-6 flex flex-col group relative overflow-hidden tilt-3d min-h-[160px] border border-gray-150/20">
+                <div class="absolute -top-8 -right-8 w-20 h-20 bg-slate-500/5 rounded-full blur-xl group-hover:scale-150 transition-all duration-500 z-10"></div>
+                <div class="relative z-10 flex-grow">
+                    <div class="w-10 h-10 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center mb-4 shadow-sm border border-slate-200 group-hover:scale-110 transition duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    </div>
+                    <h3 class="text-base font-extrabold text-gray-950 tracking-tight group-hover:text-slate-700 transition duration-200">Ekim ve Hasat Takvimi</h3>
+                    <p class="text-gray-500 text-[11px] font-semibold leading-relaxed mt-2">Bölgenize ve bitkinize en uygun ekim dönemlerini keşfederek verimliliğinizi güvence altına alın.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-150/60 flex items-center justify-between relative z-10">
+                    <span class="text-[9px] font-bold text-gray-400 group-hover:text-slate-600 transition">İncele</span>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-slate-600 group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+
+            <!-- Zirai Mücadele -->
+            <a href="{% url 'tarla_rehberi' %}?kategori=mucadele" class="nature-glass-strip p-6 flex flex-col group relative overflow-hidden tilt-3d min-h-[160px] border border-gray-150/20">
+                <div class="absolute -top-8 -right-8 w-20 h-20 bg-slate-500/5 rounded-full blur-xl group-hover:scale-150 transition-all duration-500 z-10"></div>
+                <div class="relative z-10 flex-grow">
+                    <div class="w-10 h-10 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center mb-4 shadow-sm border border-slate-200 group-hover:scale-110 transition duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-base font-extrabold text-gray-950 tracking-tight group-hover:text-slate-700 transition duration-200">Zirai Mücadele Yöntemleri</h3>
+                    <p class="text-gray-500 text-[11px] font-semibold leading-relaxed mt-2">Hastalık ve zararlılara karşı biyolojik, kültürel ve kimyasal koruma stratejileri.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-150/60 flex items-center justify-between relative z-10">
+                    <span class="text-[9px] font-bold text-gray-400 group-hover:text-slate-600 transition">İncele</span>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-slate-600 group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+
+            <!-- Toprak ve Gübreleme -->
+            <a href="{% url 'tarla_rehberi' %}?kategori=toprak" class="nature-glass-strip p-6 flex flex-col group relative overflow-hidden tilt-3d min-h-[160px] border border-gray-150/20 md:col-span-2 lg:col-span-1">
+                <div class="absolute -top-8 -right-8 w-20 h-20 bg-slate-500/5 rounded-full blur-xl group-hover:scale-150 transition-all duration-500 z-10"></div>
+                <div class="relative z-10 flex-grow">
+                    <div class="w-10 h-10 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center mb-4 shadow-sm border border-slate-200 group-hover:scale-110 transition duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <h3 class="text-base font-extrabold text-gray-950 tracking-tight group-hover:text-slate-700 transition duration-200">Toprak ve Gübreleme</h3>
+                    <p class="text-gray-500 text-[11px] font-semibold leading-relaxed mt-2">Sağlıklı bitkiler için toprak analizi, organik ve kimyasal gübreleme programları.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-gray-150/60 flex items-center justify-between relative z-10">
+                    <span class="text-[9px] font-bold text-gray-400 group-hover:text-slate-600 transition">İncele</span>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-slate-600 group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 
